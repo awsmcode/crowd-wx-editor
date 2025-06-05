@@ -42,7 +42,7 @@ function App({ locations }: { locations: Location[] }) {
                             nextPanel();
                         }}
                     />)}
-                        text={'Kategorien'}
+                        text={'Kat--egorien'}
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={false}
@@ -101,11 +101,10 @@ type TPanelContentProps = {
 function PanelContent({ text, component, onNext, onPrev, showPrev, showNext }: TPanelContentProps) {
     return (
         <>
-            <h2>{text}</h2>
+
             {component && component}
-            <p>Dies ist {text} Inhalt.</p>
-  
-            <br />
+
+
             <div className="panel-buttons">
                 {showPrev && <button onClick={onPrev}>Zurück</button>}
                 {showNext && <button onClick={onNext}>Weiter</button>}

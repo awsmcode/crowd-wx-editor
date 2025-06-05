@@ -1,19 +1,25 @@
-import { getParameterString } from "../utils/parameters";
+import { getParameterString, getCategoryList } from "../utils/parameters";
 
-import { getCategoryList } from "../utils/parameters";
+import "../styles/categories.css";
 
 const Categories = ({ onSelectCategory }: { onSelectCategory: (category: string) => void }) => {
-    return <div>Categories
-
-
-        <ul>
+    return (
+    <div className="categories-container">
+        <div className="categories-header">Kategorien</div>
             {getCategoryList().map((category) => (
-                <li onClick={() => {
-                    onSelectCategory(category);
-                }} key={category}>{getParameterString(category)}</li>
+                <div
+                    className="category-item"
+                    onClick={() => {
+                        onSelectCategory(category);
+                    }}
+                    key={category}
+                >
+                    {getParameterString(category)}
+                </div>
             ))}
-        </ul>
-    </div>;
+
+    </div>
+    );
 };
 
 export default Categories;

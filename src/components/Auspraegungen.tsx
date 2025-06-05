@@ -1,18 +1,27 @@
 import { getAuspraegungenForCategory, getParameterString } from "../utils/parameters";
 
-const Auspraegungen = ({ category, onSelectAuspraegung }: { category: string | null, onSelectAuspraegung: (auspraegung: string) => void }) => {
-    return <div>Auspraegungen
-aus für {category}
-        {category && (
-        <ul>
-            {getAuspraegungenForCategory(category).map((auspraegung) => (
-                <li onClick={() => {
-                    onSelectAuspraegung(auspraegung);
-                }} key={auspraegung}>{getParameterString(auspraegung)}</li>
+type TAuspraegungenProps = {
+    category: string | null;
+    onSelectAuspraegung: (auspraegung: string) => void;
+}
+
+const Auspraegungen = ({ category, onSelectAuspraegung }: TAuspraegungenProps) => {
+    return (
+        <div className="categories-container">
+            <div className="categories-header">{category ? getParameterString(category) : ''}</div>
+                {category && getAuspraegungenForCategory(category).map((auspraegung) => (
+                    <div
+                        className="category-item"
+                        onClick={() => {
+                            onSelectAuspraegung(auspraegung);
+                        }}
+                        key={auspraegung}
+                    >
+                        {getParameterString(auspraegung)}
+                    </div>
                 ))}
-            </ul>
-        )}
-    </div>;
+        </div>
+    )
 };
 
 export default Auspraegungen;
