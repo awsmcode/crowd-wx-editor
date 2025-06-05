@@ -1,19 +1,19 @@
 .slider-container {
-  width: 100%; /* 100vw; */
-  height: 100%; /* 100vh; */
+  width: 100%;
+  height: 100%; 
   overflow: hidden;
   position: relative;
 }
 .slider-inner {
   display: flex;
   width: 500%;
-  height: 100%; /* 100vh; */
+  height: 100%;
   transition: transform 0.5s cubic-bezier(.77,0,.18,1);
 }
 .panel {
-  width: 100%; /* 100vw; */
+  width: 100%;
   max-width: 100%;
-  height: 100%; /* 100vh; */
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +21,6 @@
   overflow: hidden;
   overflow-y: scroll;
   position: relative;
-  /* background-color: red; */
 }
 
 .panel-buttons {
@@ -29,6 +28,7 @@
   display: flex;
   gap: 1rem;
 }
+
 button {
   font-size: 1.1rem;
   padding: 0.9rem 2.2rem;
@@ -45,35 +45,4 @@ button:disabled {
 }
 button:hover:not(:disabled) {
   background: #4a42c7;
-}
-
-.success-message {
-  color: #008000;
-  background-color: #00800011;
-  border: 1px solid rgba(0, 128, 0, 0.2);
-}
-
-
-.message {
-  width: 90%;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 300;  
-  margin: 7px;
-  padding: 10px;
-  border-radius: 4px;
-}
-
-
-.error-message {
-  color: #ff0000;
-  background-color: #ff000011;
-  border: 1px solid rgba(255, 0, 0, 0.2);
-}
-
-.status-panel {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
 }

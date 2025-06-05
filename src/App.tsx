@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import Categories from './components/Categories';
 import Auspraegungen from './components/Auspraegungen';
 import Locations from './components/Locations';
+import Time from './components/Time';
 import { sendReport } from './utils/fetch';
 import type { TLocation } from './types/report';
-import Time from './components/Time';
+
+
+import './App.css'
+import './styles/categories.css';
+import './styles/messages.css';
+
 
 type TAppProps = {
     token: string | null;
@@ -37,7 +42,7 @@ function App({
 
     useEffect(() => {
 
-        if (token && category && auspraegung && location && panelIndex === 4) {
+        if (token && category && auspraegung && location && panelIndex === 4 && status === null) {
             sendReport(token, {
                 category,
                 auspraegung,
