@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -7,7 +7,27 @@
     <title>Vite + React + TS</title>
   </head>
   <body>
-    <div id="root"></div>
+
+    <style>
+      .crowd-widget-root {
+        /* default values */
+        margin: 0 auto;
+        width: 320px;
+        height: 600px;
+        position: relative;
+        border: 1px solid #000;
+
+      }
+    </style>
+    <div
+      id="cw-root"
+      class="crowd-widget-root"
+      data-locations='[
+          {"name":"München","lng":11.57,"lat":48.13},
+          {"name":"Augsburg","lng":10.89,"lat":48.37}
+      ]'
+      data-token="4b74fcb0353c075f85950345ad8f2043"
+    ></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

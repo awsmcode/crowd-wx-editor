@@ -1,22 +1,24 @@
 .slider-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%; /* 100vw; */
+  height: 100%; /* 100vh; */
   overflow: hidden;
   position: relative;
 }
 .slider-inner {
   display: flex;
-  width: 400vw;
-  height: 100vh;
+  width: 400%; /* 400vw; */
+  height: 100%; /* 100vh; */
   transition: transform 0.7s cubic-bezier(.77,0,.18,1);
 }
 .panel {
-  width: 100vw;
-  height: 100vh;
+  width: 100%; /* 100vw; */
+  max-width: 100%;
+  height: 100%; /* 100vh; */
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  overflow: hidden;
 }
 .panel1 { background: #e0e0e0; }
 .panel2 { background: #e0e0ff; }
