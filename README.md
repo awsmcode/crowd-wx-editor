@@ -1,2 +1,2 @@
-# crowd-wx-editor
+# Wettermeldungen Editor
 Editor for submitting weather reports
