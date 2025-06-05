@@ -1,15 +1,17 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App, { type Location } from './App.tsx'
+import App from './App.tsx'
+import type { TLocation } from './types/report';
 
 
 const root = document.getElementById('cw-root');
 
 if (root) {
     const locationsJson = root.getAttribute('data-locations');
+    const token = root.getAttribute('data-token');
 
-    let locations: Location[] = [];
+    let locations: TLocation[] = [];
     if (locationsJson) {
 
         try {
@@ -23,7 +25,7 @@ if (root) {
 
     createRoot(root!).render(
         <StrictMode>
-          <App locations={locations} />
+          <App locations={locations} token={token} />
         </StrictMode>,
     )
 

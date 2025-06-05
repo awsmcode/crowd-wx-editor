@@ -1,9 +1,8 @@
-
-import type { Location } from "../App";
+import type { TLocation } from "../types/report";
 
 type TLocationProps = {
-    locations: Location[];
-    onSelectLocation: (location: Location) => void;
+    locations: TLocation[];
+    onSelectLocation: (location: TLocation) => void;
 }
 
 const Locations = ({ locations, onSelectLocation }: TLocationProps) => {

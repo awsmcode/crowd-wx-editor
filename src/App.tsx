@@ -1,20 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Categories from './components/Categories';
 import Auspraegungen from './components/Auspraegungen';
 import Locations from './components/Locations';
+import { sendReport } from './utils/fetch';
+import type { TLocation } from './types/report';
 
-export type Location = {
-    name: string;
-    lng: number;
-    lat: number;
+type TAppProps = {
+    token?: string;
+    locations: TLocation[];
 }
 
-function App({ locations }: { locations: Location[] }) {
+function App({
+    token,
+    locations
+}: TAppProps) {
     const [panelIndex, setPanelIndex] = useState(0);
     const [category, setCategory] = useState<string | null>(null);
     const [auspraegung, setAuspraegung] = useState<string | null>(null);
-    const [location, setLocation] = useState<Location | null>(null);
+    const [location, setLocation] = useState<TLocation | null>(null);
+    const [timestamp, setTimestamp] = useState<string>(new Date().toISOString());
 
     function goToPanel(idx: number) {
       setPanelIndex(idx);
@@ -27,6 +32,20 @@ function App({ locations }: { locations: Location[] }) {
     function prevPanel() {
         if (panelIndex > 0) setPanelIndex(panelIndex - 1);
     }
+
+    useEffect(() => {
+
+        if (token && category && auspraegung && location && panelIndex === 4) {
+            sendReport(token, {
+                category,
+                auspraegung,
+                location,
+                timestamp,
+            }, () => {
+                goToPanel(4);
+            }, () => {});
+        }
+    }, [panelIndex]);
 
     return (
         <div className="slider-container">
@@ -49,8 +68,7 @@ function App({ locations }: { locations: Location[] }) {
                             setAuspraegung(auspraegung);
                             nextPanel();
                         }}
-                    />)}
-                        text="Ausprägungen"
+                    />)}    
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={true}
@@ -63,7 +81,6 @@ function App({ locations }: { locations: Location[] }) {
                             setLocation(location);
                             nextPanel();
                         }} />)}
-                        text="Zeit und Standort"
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={true}
@@ -73,14 +90,13 @@ function App({ locations }: { locations: Location[] }) {
                 <div className="panel panel4">
                     <PanelContent
                         component={null}
-                        text="Vielen Dank!"
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={true}
                         showNext={true}
                     />
                 </div>
-                <div className="panel panel5">ok</div>
+                <div className="panel panel5">sended</div>
             </div>
 
         </div>
@@ -89,14 +105,13 @@ function App({ locations }: { locations: Location[] }) {
 
 type TPanelContentProps = {
     component?: any;
-    text: string;
     onNext: () => void;
     onPrev: () => void;
     showPrev: boolean;
     showNext: boolean;
 }
 
-function PanelContent({ text, component, onNext, onPrev, showPrev, showNext }: TPanelContentProps) {
+function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelContentProps) {
     return (
         <>
             {component && component}
