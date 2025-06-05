@@ -5,9 +5,10 @@ import Auspraegungen from './components/Auspraegungen';
 import Locations from './components/Locations';
 import { sendReport } from './utils/fetch';
 import type { TLocation } from './types/report';
+import Time from './components/Time';
 
 type TAppProps = {
-    token?: string;
+    token: string | null;
     locations: TLocation[];
 }
 
@@ -88,13 +89,10 @@ function App({
                     />
                 </div>
                 <div className="panel panel4">
-                    <PanelContent
-                        component={null}
-                        onNext={nextPanel}
-                        onPrev={prevPanel}
-                        showPrev={true}
-                        showNext={true}
-                    />
+                    <Time onSelectTimestamp={(timestamp) => {
+                        setTimestamp(timestamp);
+                        nextPanel();
+                    }} />
                 </div>
                 <div className="panel panel5">sended</div>
             </div>
