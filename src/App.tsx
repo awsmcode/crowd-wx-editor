@@ -20,7 +20,7 @@ function App({
     const [category, setCategory] = useState<string | null>(null);
     const [auspraegung, setAuspraegung] = useState<string | null>(null);
     const [location, setLocation] = useState<TLocation | null>(null);
-    const [timestamp, setTimestamp] = useState<string>(new Date().toISOString());
+    const [timestamp, setTimestamp] = useState<number>(Date.now());
 
     function goToPanel(idx: number) {
       setPanelIndex(idx);
@@ -89,10 +89,16 @@ function App({
                     />
                 </div>
                 <div className="panel panel4">
-                    <Time onSelectTimestamp={(timestamp) => {
-                        setTimestamp(timestamp);
-                        nextPanel();
-                    }} />
+                <PanelContent
+                        component={(<Time onSelectTimestamp={(timestamp) => {
+                            setTimestamp(timestamp);
+                            nextPanel();
+                        }} />)}
+                        onNext={nextPanel}
+                        onPrev={prevPanel}
+                        showPrev={true}
+                        showNext={false}
+                    />
                 </div>
                 <div className="panel panel5">sended</div>
             </div>

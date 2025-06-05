@@ -1,5 +1,3 @@
-
-
 type TTimeProps = {
     onSelectTimestamp: (timestamp: number) => void;
 }
@@ -11,7 +9,6 @@ function createTimestamps(base: Date | number, offsets: { label: string, minutes
         value: Math.floor(new Date(baseDate.getTime() - minutes * 60 * 1000).getTime() / 1000) // Unix-Timestamp in Sekunden
     }));
 }
-
 
 const Time = ({ onSelectTimestamp }: TTimeProps) => {
     const baseDate = Date.now(); // new Date("2025-01-01T12:00:00"); // oder Date.now()

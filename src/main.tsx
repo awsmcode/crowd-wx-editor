@@ -13,11 +13,10 @@ if (root) {
 
     let locations: TLocation[] = [];
     if (locationsJson) {
-
         try {
             locations = JSON.parse(locationsJson);
             // Jetzt kannst du mit locations weiterarbeiten!
-            console.log(locations);
+            // console.log(locations);
         } catch (e) {
             console.error("Locations-Parsing-Fehler:", e);
         }

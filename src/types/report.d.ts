@@ -8,7 +8,7 @@ type TReport = {
     category: string;
     auspraegung: string;
     location: TLocation;
-    timestamp: string;
+    timestamp: number;
 }
 
 export type { TReport, TLocation };
