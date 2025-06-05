@@ -19,6 +19,7 @@
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
+  overflow-y: scroll;
 }
 .panel1 { background: #e0e0e0; }
 .panel2 { background: #e0e0ff; }
