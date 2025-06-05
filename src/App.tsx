@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Categories from './components/Categories';
 import Auspraegungen from './components/Auspraegungen';
-import Metas from './components/Metas';
+import Locations from './components/Locations';
 
 export type Location = {
     name: string;
@@ -14,13 +14,14 @@ function App({ locations }: { locations: Location[] }) {
     const [panelIndex, setPanelIndex] = useState(0);
     const [category, setCategory] = useState<string | null>(null);
     const [auspraegung, setAuspraegung] = useState<string | null>(null);
+    const [location, setLocation] = useState<Location | null>(null);
 
     function goToPanel(idx: number) {
       setPanelIndex(idx);
     }
 
     function nextPanel() {
-        if (panelIndex < 3) setPanelIndex(panelIndex + 1);
+        if (panelIndex < 4) setPanelIndex(panelIndex + 1);
     }
 
     function prevPanel() {
@@ -32,21 +33,14 @@ function App({ locations }: { locations: Location[] }) {
             <div
                 className="slider-inner"
                 style={{
-                    transform: `translateX(-${panelIndex * 25}%)`,
+                    transform: `translateX(-${panelIndex * 20}%)`,
                 }}
             >
                 <div className="panel panel1">
-                    <PanelContent
-                        component={(<Categories onSelectCategory={(category) => {
+                    <Categories onSelectCategory={(category) => {
                             setCategory(category);
                             nextPanel();
                         }}
-                    />)}
-                        text={'Kat--egorien'}
-                        onNext={nextPanel}
-                        onPrev={prevPanel}
-                        showPrev={false}
-                        showNext={false}
                     />
                 </div>
                 <div className="panel panel2">
@@ -65,12 +59,15 @@ function App({ locations }: { locations: Location[] }) {
                 </div>
                 <div className="panel panel3">
                     <PanelContent
-                        component={(<Metas locations={locations} category={category} auspraegung={auspraegung} />)}
+                        component={(<Locations locations={locations} onSelectLocation={(location) => {
+                            setLocation(location);
+                            nextPanel();
+                        }} />)}
                         text="Zeit und Standort"
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={true}
-                        showNext={true}
+                        showNext={false}
                     />
                 </div>
                 <div className="panel panel4">
@@ -80,9 +77,10 @@ function App({ locations }: { locations: Location[] }) {
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={true}
-                        showNext={false}
+                        showNext={true}
                     />
                 </div>
+                <div className="panel panel5">ok</div>
             </div>
 
         </div>
@@ -101,10 +99,7 @@ type TPanelContentProps = {
 function PanelContent({ text, component, onNext, onPrev, showPrev, showNext }: TPanelContentProps) {
     return (
         <>
-
             {component && component}
-
-
             <div className="panel-buttons">
                 {showPrev && <button onClick={onPrev}>Zurück</button>}
                 {showNext && <button onClick={onNext}>Weiter</button>}

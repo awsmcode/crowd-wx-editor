@@ -6,7 +6,7 @@
 }
 .slider-inner {
   display: flex;
-  width: 400%; /* 400vw; */
+  width: 500%;
   height: 100%; /* 100vh; */
   transition: transform 0.5s cubic-bezier(.77,0,.18,1);
 }
@@ -23,10 +23,7 @@
   position: relative;
   /* background-color: red; */
 }
-.panel1 { b-ackground: #e0e0e0; }
-.panel2 { b-ackground: #e0e0ff; }
-.panel3 { b-ackground: #e0ffe0; }
-.panel4 { background: #fff0e0; }
+
 .panel-buttons {
   margin-top: 2rem;
   display: flex;
