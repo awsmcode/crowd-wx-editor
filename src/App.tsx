@@ -21,6 +21,7 @@ function App({
     const [auspraegung, setAuspraegung] = useState<string | null>(null);
     const [location, setLocation] = useState<TLocation | null>(null);
     const [timestamp, setTimestamp] = useState<number>(Date.now());
+    const [status, setStatus] = useState<string | null>(null);
 
     function goToPanel(idx: number) {
       setPanelIndex(idx);
@@ -44,7 +45,10 @@ function App({
                 timestamp,
             }, () => {
                 goToPanel(4);
-            }, () => {});
+                setStatus("success");
+            }, () => {
+                setStatus("error");
+            });
         }
     }, [panelIndex]);
 
@@ -89,7 +93,7 @@ function App({
                     />
                 </div>
                 <div className="panel panel4">
-                <PanelContent
+                    <PanelContent
                         component={(<Time onSelectTimestamp={(timestamp) => {
                             setTimestamp(timestamp);
                             nextPanel();
@@ -100,12 +104,16 @@ function App({
                         showNext={false}
                     />
                 </div>
-                <div className="panel panel5">sended</div>
+                <div className="panel panel5 status-panel">
+                    {status === "success" && <div className="message success-message">Wettermeldung erfolgreich gesendet!</div>}
+                    {status === "error" && <div className="message error-message">Fehler beim Senden der Wettermeldung!</div>}
+                </div>
             </div>
 
         </div>
     );
 }
+
 
 type TPanelContentProps = {
     component?: any;
@@ -114,6 +122,7 @@ type TPanelContentProps = {
     showPrev: boolean;
     showNext: boolean;
 }
+
 
 function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelContentProps) {
     return (
@@ -126,5 +135,6 @@ function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelC
         </>
     );
 }
+
 
 export default App
