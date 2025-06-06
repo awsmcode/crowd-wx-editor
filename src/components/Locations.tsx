@@ -15,9 +15,9 @@ const Locations = ({ locations, onSelectLocation }: TLocationProps) => {
                         onClick={() => {
                             onSelectLocation(location);
                         }}
-                        key={location.name}
+                        key={location.place}
                     >
-                        {location.name}
+                        {location.place}
                     </div>
                 ))}
         </div>

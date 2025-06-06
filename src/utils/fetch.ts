@@ -1,9 +1,9 @@
 import type { TReport } from "../types/report";
 
-const baseUrl = 'http://localhost:8080/v3';
+const baseUrl = 'http://localhost:3001/data';
 
 export const sendReport = (token: string, report: TReport, onSuccess: () => void, onError: () => void) => {
-    return fetch(`${baseUrl}/report`, {
+    return fetch(`${baseUrl}/add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -12,27 +12,20 @@ export const sendReport = (token: string, report: TReport, onSuccess: () => void
         body: JSON.stringify({
             category: report.category,
             auspraegung: report.auspraegung,
-            location: report.location, // @todo 
-            timestamp: report.timestamp
+            location: report.location,
+            timestamp: report.timestamp * 1000,
         }),
-        })
-        .then(async () => {
-            onSuccess();
-
-        /*
+    })
+    .then(async (response) => {
         if (!response.ok) {
-            // Fehler anzeigen (z.B. Validierungsfehler von zod)
             const err = await response.json();
-            alert("Fehler: " + JSON.stringify(err));
+            console.log(err);
+            // alert("Fehler: " + JSON.stringify(err));
         } else {
-
-            refreshList();
-
-            alert("Erfolgreich gespeichert!");
+            onSuccess();
         }
-        */
-        })
-        .catch(() => {
-            onError();
-        });
+    })
+    .catch(() => {
+        onError();
+    });
 }

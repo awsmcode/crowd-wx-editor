@@ -41,7 +41,6 @@ function App({
     }
 
     useEffect(() => {
-
         if (token && category && auspraegung && location && panelIndex === 4 && status === null) {
             sendReport(token, {
                 category,
@@ -63,6 +62,7 @@ function App({
                 className="slider-inner"
                 style={{
                     transform: `translateX(-${panelIndex * 20}%)`,
+                    width: `500%`,
                 }}
             >
                 <div className="panel panel1">
@@ -97,6 +97,7 @@ function App({
                         showNext={false}
                     />
                 </div>
+                
                 <div className="panel panel4">
                     <PanelContent
                         component={(<Time onSelectTimestamp={(timestamp) => {
@@ -113,6 +114,8 @@ function App({
                     {status === "success" && <div className="message success-message">Wettermeldung erfolgreich gesendet!</div>}
                     {status === "error" && <div className="message error-message">Fehler beim Senden der Wettermeldung!</div>}
                 </div>
+
+               {/* <div className="panel panel3"></div> */}
             </div>
 
         </div>

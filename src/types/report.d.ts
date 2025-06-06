@@ -1,5 +1,5 @@
 export type TLocation = {
-    name: string;
+    place: string;
     lng: number;
     lat: number;
 }

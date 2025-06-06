@@ -6,7 +6,6 @@
 }
 .slider-inner {
   display: flex;
-  width: 500%;
   height: 100%;
   transition: transform 0.5s cubic-bezier(.77,0,.18,1);
 }
