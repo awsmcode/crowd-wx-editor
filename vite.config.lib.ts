@@ -2,15 +2,32 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-
+import { writeFileSync, mkdirSync, existsSync } from 'node:fs'
+import { execSync } from 'node:child_process'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
+// Plugin to ensure types are generated after Vite build
+const typesPlugin = () => {
+  return {
+    name: 'types-preservation',
+    closeBundle() {
+      // Ensure types directory exists and regenerate types if needed
+      const typesDir = resolve(__dirname, 'dist/lib/types')
+      if (!existsSync(typesDir)) {
+        console.log('Regenerating TypeScript declarations...')
+        execSync('npx tsc --p ./tsconfig.module.build.json', { stdio: 'inherit' })
+      }
+    }
+  }
+}
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), typesPlugin()],
   build: {
+    copyPublicDir: false,
+    outDir: 'dist/lib', // Nur Library-Ausgabe
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
       name: 'CrowdWxEditor',

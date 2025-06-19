@@ -1,3 +1,5 @@
+import React from 'react';
+
 type TTimeProps = {
     onSelectTimestamp: (timestamp: number) => void;
 }

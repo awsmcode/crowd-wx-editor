@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Categories from './components/Categories';
 import Auspraegungen from './components/Auspraegungen';
 import Locations from './components/Locations';
@@ -146,3 +146,4 @@ function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelC
 
 
 export default App
+export { App as CrowdWxEditor }

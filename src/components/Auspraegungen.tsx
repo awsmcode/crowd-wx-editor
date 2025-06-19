@@ -1,3 +1,4 @@
+import React from 'react';
 import { getAuspraegungenForCategory, getParameterString } from "../utils/parameters";
 
 type TAuspraegungenProps = {

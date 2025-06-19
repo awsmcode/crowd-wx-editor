@@ -1,3 +1,4 @@
+import React from 'react';
 import { getParameterString, getCategoryList } from "../utils/parameters";
 
 import "../styles/categories.css";

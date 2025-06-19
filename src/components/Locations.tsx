@@ -1,3 +1,4 @@
+import React from 'react'; /** @jsxImportSource react */
 import type { TLocation } from "../types/report";
 
 type TLocationProps = {
