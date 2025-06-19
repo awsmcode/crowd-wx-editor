@@ -15,6 +15,7 @@
   },
   "exports": {
     ".": {
+      "types": "./dist/lib/types/lib/main.d.ts",
       "import": "./dist/lib/crowd-wx-editor.js",
       "require": "./dist/lib/crowd-wx-editor.cjs"
     },
