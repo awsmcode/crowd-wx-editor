@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "types": "./dist/lib/types/lib/main.d.ts",
   "scripts": {
     "dev": "vite",
     "buildxxx": "tsc -b && vite build",
@@ -18,8 +19,8 @@
       "require": "./dist/lib/crowd-wx-editor.cjs"
     },
     "./types": {
-      "import": "./dist/lib/types/index.d.ts",
-      "require": "./dist/lib/types/index.d.ts"
+      "import": "./dist/lib/types/lib/main.d.ts",
+      "require": "./dist/lib/types/lib/main.d.ts"
     }
   },
   "peerDependencies": {
