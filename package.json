@@ -1,7 +1,7 @@
 {
   "name": "crowd-wx-editor",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "types": "./dist/lib/types/lib/main.d.ts",
   "scripts": {

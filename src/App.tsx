@@ -15,11 +15,13 @@ import './styles/messages.css';
 type TAppProps = {
     token: string | null;
     locations: TLocation[];
+    params: string[] | null;
 }
 
 function App({
     token,
-    locations
+    locations,
+    params = [],
 }: TAppProps) {
     const [panelIndex, setPanelIndex] = useState(0);
     const [category, setCategory] = useState<string | null>(null);
@@ -66,7 +68,9 @@ function App({
                 }}
             >
                 <div className="panel panel1">
-                    <Categories onSelectCategory={(category) => {
+                    <Categories
+                        params={params || []}
+                        onSelectCategory={(category) => {
                             setCategory(category);
                             nextPanel();
                         }}

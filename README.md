@@ -4,6 +4,11 @@ Editor for submitting weather reports
 
 # widget
 
+
+# component
+$ npm run build:lib
+
+
 css
 ```css
 <style>
@@ -26,6 +31,7 @@ html
         {"name":"München","lng":11.57,"lat":48.13},
         {"name":"Augsburg","lng":10.89,"lat":48.37}
     ]'
+    data-params='["blitze","wind","hagel","regen"]'
 ></div>
 ```
 

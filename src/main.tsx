@@ -10,7 +10,8 @@ const root = document.getElementById('cw-root');
 if (root) {
     const
         locationsJson = root.getAttribute('data-locations'),
-        token = root.getAttribute('data-token');
+        token = root.getAttribute('data-token'),
+        paramsJson = root.getAttribute('data-params');
 
     let locations: TLocation[] = [];
     if (locationsJson) {
@@ -21,9 +22,18 @@ if (root) {
         }
     }
 
+    let params: string[] = [];
+    if (paramsJson) {
+        try {
+            params = JSON.parse(paramsJson);
+        } catch (e) {
+            console.error("Params-Parsing-Fehler:", e);
+        }
+    }
+
     createRoot(root!).render(
         <StrictMode>
-          <App locations={locations} token={token} />
+          <App locations={locations} token={token} params={params} />
         </StrictMode>,
     )
 
