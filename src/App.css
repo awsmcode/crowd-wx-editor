@@ -4,11 +4,24 @@
   overflow: hidden;
   position: relative;
 }
+
+.rate-limit-warning {
+  background: #fff3cd;
+  color: #856404;
+  padding: 12px 0px;
+  text-align: center;
+  font-weight: 500;
+  border-bottom: 1px solid #ffeaa7;
+  font-size: 14px;
+  width: 100%;
+}
+
 .slider-inner {
   display: flex;
   height: 100%;
   transition: transform 0.5s cubic-bezier(.77,0,.18,1);
 }
+
 .panel {
   width: 100%;
   max-width: 100%;

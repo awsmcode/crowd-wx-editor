@@ -5,7 +5,7 @@ import Locations from './components/Locations';
 import Time from './components/Time';
 import { sendReport } from './utils/fetch';
 import type { TLocation } from './types/report';
-
+import ImageUpload from './components/ImageUpload';
 
 import './App.css'
 import './styles/categories.css';
@@ -16,19 +16,36 @@ type TAppProps = {
     token: string | null;
     locations: TLocation[];
     params: string[] | null;
+    source: string;
 }
 
 function App({
     token,
     locations,
     params = [],
+    source,
 }: TAppProps) {
+    const LIMIT_MINUTES = 10;
     const [panelIndex, setPanelIndex] = useState(0);
     const [category, setCategory] = useState<string | null>(null);
     const [auspraegung, setAuspraegung] = useState<string | null>(null);
     const [location, setLocation] = useState<TLocation | null>(null);
     const [timestamp, setTimestamp] = useState<number>(Date.now());
     const [status, setStatus] = useState<string | null>(null);
+    const [showRateLimitWarning, setShowRateLimitWarning] = useState(false);
+
+    // Prüfe beim Laden der Komponente, ob eine kürzliche Meldung existiert
+    useEffect(() => {
+        const lastReportTime = localStorage.getItem('lastWeatherReportTime');
+        if (lastReportTime) {
+            const timeDiff = Date.now() - parseInt(lastReportTime);
+            const limitMinutes = LIMIT_MINUTES * 60 * 1000; // 10 Minuten in Millisekunden
+            
+            if (timeDiff < limitMinutes) {
+                setShowRateLimitWarning(true);
+            }
+        }
+    }, []);
 
     function goToPanel(idx: number) {
       setPanelIndex(idx);
@@ -44,12 +61,15 @@ function App({
 
     useEffect(() => {
         if (token && category && auspraegung && location && panelIndex === 4 && status === null) {
-            sendReport(token, {
+                sendReport(token, {
                 category,
                 auspraegung,
                 location,
                 timestamp,
+                source,
             }, () => {
+                // Speichere die Zeit der erfolgreichen Meldung im localStorage
+                localStorage.setItem('lastWeatherReportTime', Date.now().toString());
                 goToPanel(4);
                 setStatus("success");
             }, () => {
@@ -60,6 +80,11 @@ function App({
 
     return (
         <div className="slider-container">
+            {showRateLimitWarning && (
+                <div className="rate-limit-warning">
+                    ⚠️ Sie können nur einmal innerhalb von 10 Minuten eine Wettermeldung absetzen.
+                </div>
+            )}
             <div
                 className="slider-inner"
                 style={{
@@ -68,6 +93,7 @@ function App({
                 }}
             >
                 <div className="panel panel1">
+                    {/*
                     <Categories
                         params={params || []}
                         onSelectCategory={(category) => {
@@ -75,6 +101,8 @@ function App({
                             nextPanel();
                         }}
                     />
+                    */}
+<ImageUpload />
                 </div>
                 <div className="panel panel2">
                     <PanelContent
@@ -136,13 +164,28 @@ type TPanelContentProps = {
 }
 
 
+
 function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelContentProps) {
     return (
         <>
             {component && component}
             <div className="panel-buttons">
-                {showPrev && <button onClick={onPrev}>Zurück</button>}
-                {showNext && <button onClick={onNext}>Weiter</button>}
+                {showPrev && (
+                    <a href="#" onClick={(e) => { e.preventDefault(); onPrev(); }} className="text-link">
+                        <svg className="arrow-left" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5H1m0 0l4 4M1 5l4-4"></path>
+                        </svg>
+                        Zurück
+                    </a>
+                )}
+                {showNext && (
+                    <a href="#" onClick={(e) => { e.preventDefault(); onNext(); }} className="text-link">
+                        Weiter
+                        <svg className="arrow-right" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"></path>
+                        </svg>
+                    </a>
+                )}
             </div>
         </>
     );

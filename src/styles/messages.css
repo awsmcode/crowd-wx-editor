@@ -26,4 +26,32 @@
     justify-content: flex-start;
     flex-direction: column;
 }
+
+.text-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.text-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.arrow-left,
+.arrow-right {
+    width: 14px;
+    height: 14px;
+    margin: 0 4px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.arrow-right {
+    transform: rotate(180deg);
+}
   

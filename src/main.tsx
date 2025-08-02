@@ -11,7 +11,8 @@ if (root) {
     const
         locationsJson = root.getAttribute('data-locations'),
         token = root.getAttribute('data-token'),
-        paramsJson = root.getAttribute('data-params');
+        paramsJson = root.getAttribute('data-params'),
+        source = root.getAttribute('data-source') || 'network';
 
     let locations: TLocation[] = [];
     if (locationsJson) {
@@ -31,9 +32,10 @@ if (root) {
         }
     }
 
+
     createRoot(root!).render(
         <StrictMode>
-          <App locations={locations} token={token} params={params} />
+          <App locations={locations} token={token} params={params} source={source} />
         </StrictMode>,
     )
 

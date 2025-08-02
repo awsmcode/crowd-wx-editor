@@ -9,6 +9,7 @@ type TReport = {
     auspraegung: string;
     location: TLocation;
     timestamp: number;
+    source: string;
 }
 
 export type { TReport, TLocation };

@@ -1,0 +1,221 @@
+.image-upload-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.image-upload-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.upload-description {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.error-message {
+    background-color: #fee;
+    border: 1px solid #fcc;
+    color: #c33;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #efe;
+    border: 1px solid #cfc;
+    color: #3c3;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dropzone {
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropzone:hover {
+    border-color: #007bff;
+    background-color: #f8f9ff;
+}
+
+.dropzone.drag-active {
+    border-color: #007bff;
+    background-color: #e3f2fd;
+    transform: scale(1.02);
+}
+
+.dropzone.drag-reject {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.dropzone.has-file {
+    border-style: solid;
+    border-color: #28a745;
+    background-color: #f8fff9;
+}
+
+.dropzone-content {
+    width: 100%;
+}
+
+.upload-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    color: #007bff;
+}
+
+.drag-message {
+    color: #007bff;
+    font-weight: 500;
+}
+
+.drag-message p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.upload-message p {
+    margin: 8px 0;
+    color: #666;
+}
+
+.upload-message strong {
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.upload-hint {
+    font-size: 0.85rem !important;
+    color: #999 !important;
+    margin-top: 8px !important;
+}
+
+.file-info {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.file-preview {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.file-details {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.file-details p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.file-details strong {
+    color: #333;
+}
+
+.upload-progress {
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.upload-progress p {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.remove-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #c82333;
+}
+
+.remove-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .image-upload-container {
+        padding: 15px;
+    }
+    
+    .dropzone {
+        padding: 30px 15px;
+        min-height: 150px;
+    }
+    
+    .upload-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .file-info {
+        max-width: 100%;
+    }
+    
+    .preview-image {
+        max-height: 150px;
+    }
+} 
