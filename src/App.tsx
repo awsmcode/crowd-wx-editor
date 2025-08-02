@@ -57,10 +57,13 @@ function App({
         // Wenn wir im Upload-Panel sind (panel5) und ein Bild hochgeladen werden soll
         if (panelIndex === 4 && uploadTriggerRef.current) {
             const uploadSuccess = await uploadTriggerRef.current();
+            console.log('uploadSuccess', uploadSuccess);
+            /*
             if (!uploadSuccess) {
                 // Upload fehlgeschlagen, nicht weitergehen
                 return;
             }
+            */
         }
         
         if (panelIndex < 5) setPanelIndex(panelIndex + 1);
@@ -82,7 +85,7 @@ function App({
             }, () => {
                 // Speichere die Zeit der erfolgreichen Meldung im localStorage
                 localStorage.setItem('lastWeatherReportTime', Date.now().toString());
-                goToPanel(4);
+                goToPanel(5);
                 setStatus("success");
             }, () => {
                 setStatus("error");
@@ -193,7 +196,7 @@ type TPanelContentProps = {
 
 function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelContentProps) {
     return (
-        <>
+        <div className="panel-content">
             {component && component}
             <div className="panel-buttons">
                 {showPrev && (
@@ -213,7 +216,7 @@ function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelC
                     </a>
                 )}
             </div>
-        </>
+        </div>
     );
 }
 
