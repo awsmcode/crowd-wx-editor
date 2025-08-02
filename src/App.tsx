@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Categories from './components/Categories';
 import Auspraegungen from './components/Auspraegungen';
 import Locations from './components/Locations';
@@ -32,7 +32,9 @@ function App({
     const [location, setLocation] = useState<TLocation | null>(null);
     const [timestamp, setTimestamp] = useState<number>(Date.now());
     const [status, setStatus] = useState<string | null>(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [showRateLimitWarning, setShowRateLimitWarning] = useState(false);
+    const uploadTriggerRef = useRef<(() => Promise<boolean>) | null>(null);
 
     // Prüfe beim Laden der Komponente, ob eine kürzliche Meldung existiert
     useEffect(() => {
@@ -51,8 +53,17 @@ function App({
       setPanelIndex(idx);
     }
 
-    function nextPanel() {
-        if (panelIndex < 4) setPanelIndex(panelIndex + 1);
+    async function nextPanel() {
+        // Wenn wir im Upload-Panel sind (panel5) und ein Bild hochgeladen werden soll
+        if (panelIndex === 4 && uploadTriggerRef.current) {
+            const uploadSuccess = await uploadTriggerRef.current();
+            if (!uploadSuccess) {
+                // Upload fehlgeschlagen, nicht weitergehen
+                return;
+            }
+        }
+        
+        if (panelIndex < 5) setPanelIndex(panelIndex + 1);
     }
 
     function prevPanel() {
@@ -60,13 +71,14 @@ function App({
     }
 
     useEffect(() => {
-        if (token && category && auspraegung && location && panelIndex === 4 && status === null) {
-                sendReport(token, {
+        if (token && category && auspraegung && location && panelIndex === 5 && status === null) {
+            sendReport(token, {
                 category,
                 auspraegung,
                 location,
                 timestamp,
                 source,
+                imageUrl: imageUrl || '',
             }, () => {
                 // Speichere die Zeit der erfolgreichen Meldung im localStorage
                 localStorage.setItem('lastWeatherReportTime', Date.now().toString());
@@ -88,27 +100,24 @@ function App({
             <div
                 className="slider-inner"
                 style={{
-                    transform: `translateX(-${panelIndex * 20}%)`,
-                    width: `500%`,
+                    transform: `translateX(-${panelIndex * 16.666666666666666}%)`,
+                    width: `600%`,
                 }}
             >
                 <div className="panel panel1">
-                    {/*
                     <Categories
                         params={params || []}
-                        onSelectCategory={(category) => {
+                        onSelectCategory={async (category) => {
                             setCategory(category);
-                            nextPanel();
+                            await nextPanel();
                         }}
                     />
-                    */}
-<ImageUpload />
                 </div>
                 <div className="panel panel2">
                     <PanelContent
-                        component={(<Auspraegungen category={category} onSelectAuspraegung={(auspraegung) => {
+                        component={(<Auspraegungen category={category} onSelectAuspraegung={async (auspraegung) => {
                             setAuspraegung(auspraegung);
-                            nextPanel();
+                            await nextPanel();
                         }}
                     />)}    
                         onNext={nextPanel}
@@ -119,9 +128,9 @@ function App({
                 </div>
                 <div className="panel panel3">
                     <PanelContent
-                        component={(<Locations locations={locations} onSelectLocation={(location) => {
+                        component={(<Locations locations={locations} onSelectLocation={async (location) => {
                             setLocation(location);
-                            nextPanel();
+                            await nextPanel();
                         }} />)}
                         onNext={nextPanel}
                         onPrev={prevPanel}
@@ -132,9 +141,9 @@ function App({
                 
                 <div className="panel panel4">
                     <PanelContent
-                        component={(<Time onSelectTimestamp={(timestamp) => {
+                        component={(<Time onSelectTimestamp={async (timestamp) => {
                             setTimestamp(timestamp);
-                            nextPanel();
+                            await nextPanel();
                         }} />)}
                         onNext={nextPanel}
                         onPrev={prevPanel}
@@ -142,7 +151,24 @@ function App({
                         showNext={false}
                     />
                 </div>
-                <div className="panel panel5 status-panel">
+
+                <div className="panel panel5">
+                    <PanelContent
+                        component={(<ImageUpload 
+                            triggerUploadRef={uploadTriggerRef}
+                            onImageUploaded={(response) => {
+                                console.log('image uploaded', response);
+                                setImageUrl(response.s3Key);
+                            }} 
+                        />)}
+                        onNext={nextPanel}
+                        onPrev={prevPanel}
+                        showPrev={true}
+                        showNext={true}
+                    />
+                </div>
+
+                <div className="panel panel6 status-panel">
                     {status === "success" && <div className="message success-message">Wettermeldung erfolgreich gesendet!</div>}
                     {status === "error" && <div className="message error-message">Fehler beim Senden der Wettermeldung!</div>}
                 </div>
@@ -157,7 +183,7 @@ function App({
 
 type TPanelContentProps = {
     component?: any;
-    onNext: () => void;
+    onNext: () => Promise<void>;
     onPrev: () => void;
     showPrev: boolean;
     showNext: boolean;
@@ -179,7 +205,7 @@ function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelC
                     </a>
                 )}
                 {showNext && (
-                    <a href="#" onClick={(e) => { e.preventDefault(); onNext(); }} className="text-link">
+                    <a href="#" onClick={async (e) => { e.preventDefault(); await onNext(); }} className="text-link">
                         Weiter
                         <svg className="arrow-right" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"></path>

@@ -6,9 +6,10 @@ interface ImageUploadProps {
     onImageUploaded?: (imageData: any) => void;
     onUploadError?: (error: string) => void;
     className?: string;
+    triggerUploadRef?: React.MutableRefObject<(() => Promise<boolean>) | null>;
 }
 
-const ImageUpload = ({ onImageUploaded, onUploadError, className }: ImageUploadProps) => {
+const ImageUpload = ({ onImageUploaded, onUploadError, className, triggerUploadRef }: ImageUploadProps) => {
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -32,11 +33,12 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className }: ImageUploadP
             const file = acceptedFiles[0];
             setUploadedFile(file);
             setErrorMessage('');
-            uploadFile(file);
+            setUploadStatus('idle');
+            setUploadProgress(0);
         }
     }, []);
 
-    const uploadFile = async (file: File) => {
+    const uploadFile = async (file: File): Promise<void> => {
         setUploadStatus('uploading');
         setUploadProgress(0);
 
@@ -72,7 +74,7 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className }: ImageUploadP
                     console.log('Upload erfolgreich:', result);
                     // Callback für erfolgreichen Upload
                     if (onImageUploaded) {
-                        onImageUploaded(result.data);
+                        onImageUploaded(result);
                     }
                 } catch (e) {
                     console.log('Upload erfolgreich, aber keine JSON-Antwort');
@@ -87,6 +89,7 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className }: ImageUploadP
                 if (onUploadError) {
                     onUploadError(errorMsg);
                 }
+                throw new Error(errorMsg);
             }
         } catch (error) {
             const errorMsg = 'Netzwerkfehler beim Hochladen';
@@ -96,6 +99,7 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className }: ImageUploadP
             if (onUploadError) {
                 onUploadError(errorMsg);
             }
+            throw error;
         }
     };
 
@@ -114,6 +118,25 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className }: ImageUploadP
         setUploadProgress(0);
         setErrorMessage('');
     };
+
+    const handleUpload = async (): Promise<boolean> => {
+        if (uploadedFile) {
+            try {
+                await uploadFile(uploadedFile);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+        return true; // Kein Bild vorhanden, also erfolgreich
+    };
+
+    // Expose the upload function via ref
+    React.useEffect(() => {
+        if (triggerUploadRef) {
+            triggerUploadRef.current = handleUpload;
+        }
+    }, [uploadedFile, triggerUploadRef]);
 
     return (
         <div className={`image-upload-container ${className || ''}`}>
@@ -149,11 +172,13 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className }: ImageUploadP
                                 className="preview-image"
                             />
                         </div>
+                        {/*
                         <div className="file-details">
                             <p><strong>Dateiname:</strong> {uploadedFile.name}</p>
                             <p><strong>Größe:</strong> {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
                             <p><strong>Typ:</strong> {uploadedFile.type}</p>
                         </div>
+                        */}
                         {uploadStatus === 'uploading' && (
                             <div className="upload-progress">
                                 <div className="progress-bar">
@@ -165,16 +190,30 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className }: ImageUploadP
                                 <p>Hochladen... {uploadProgress}%</p>
                             </div>
                         )}
-                        <button 
-                            type="button" 
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                removeFile();
-                            }}
-                            className="remove-button"
-                        >
-                            Datei entfernen
-                        </button>
+                        <div className="button-group">
+                            <button 
+                                type="button" 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeFile();
+                                }}
+                                className="remove-button"
+                            >
+                                Bild entfernen
+                            </button>
+                            {/*uploadStatus === 'idle' && (
+                                <button 
+                                    type="button" 
+                                    onClick={async (e) => {
+                                        e.stopPropagation();
+                                        await handleUpload();
+                                    }}
+                                    className="upload-button"
+                                >
+                                    Bild hochladen
+                                </button>
+                            )*/}
+                        </div>
                     </div>
                 ) : (
                     <div className="dropzone-content">

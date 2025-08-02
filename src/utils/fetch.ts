@@ -7,7 +7,7 @@ export const sendReport = (
     report: TReport,
     onSuccess: () => void,
     onError: () => void
-) => {
+) => {console.log(report);
     return fetch(`${baseUrl}/add`, {
         method: "POST",
         headers: {
@@ -20,6 +20,7 @@ export const sendReport = (
             location: report.location,
             timestamp: report.timestamp * 1000,
             source: report.source,
+            imageurl: report.imageUrl,
         }),
     })
     .then(async (response) => {

@@ -10,6 +10,7 @@ type TReport = {
     location: TLocation;
     timestamp: number;
     source: string;
+    imageUrl: string;
 }
 
 export type { TReport, TLocation };
