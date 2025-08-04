@@ -8,6 +8,7 @@ export const sendReport = (
     onSuccess: () => void,
     onError: () => void
 ) => {console.log(report);
+
     return fetch(`${baseUrl}/add`, {
         method: "POST",
         headers: {
@@ -17,10 +18,12 @@ export const sendReport = (
         body: JSON.stringify({
             category: report.category,
             auspraegung: report.auspraegung,
-            location: report.location,
+            lat: report.lat,
+            lon: report.lon,
+            place: report.place,
             timestamp: report.timestamp * 1000,
             source: report.source,
-            imageurl: report.imageUrl,
+            imageUrl: report.imageUrl,
         }),
     })
     .then(async (response) => {

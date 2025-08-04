@@ -75,10 +75,14 @@ function App({
 
     useEffect(() => {
         if (token && category && auspraegung && location && panelIndex === 5 && status === null) {
+            const
+                { lat, lon, place } = location;
             sendReport(token, {
                 category,
                 auspraegung,
-                location,
+                lat,
+                lon,
+                place,
                 timestamp,
                 source,
                 imageUrl: imageUrl || '',

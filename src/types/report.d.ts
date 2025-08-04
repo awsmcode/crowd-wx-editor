@@ -1,13 +1,15 @@
 export type TLocation = {
     place: string;
-    lng: number;
+    lon: number;
     lat: number;
 }
 
 type TReport = {
     category: string;
     auspraegung: string;
-    location: TLocation;
+    lat: number;
+    lon: number;
+    place: string;
     timestamp: number;
     source: string;
     imageUrl: string;
