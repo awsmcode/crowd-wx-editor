@@ -9,7 +9,7 @@ type TLocationProps = {
 const Locations = ({ locations, onSelectLocation }: TLocationProps) => {
     return (
         <div className="categories-container">
-            <div className="categories-header">Standort</div>
+            <div className="panel-title">Standort</div>
                 {locations.map((location) => (
                     <div
                         className="category-item"

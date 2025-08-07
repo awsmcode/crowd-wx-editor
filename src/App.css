@@ -3,17 +3,20 @@
   height: 100%; 
   overflow: hidden;
   position: relative;
+  background-color: var(--wxr-color-background);
+  color: var(--wxr-color-text);
 }
 
-.rate-limit-warning {
-  background: #fff3cd;
-  color: #856404;
-  padding: 12px 0px;
+
+.panel-title {
+  color: var(--wxr-color-text);
+  margin-bottom: 0;
+  font-size: 24px;
+  font-weight: semibold;
   text-align: center;
-  font-weight: 500;
-  border-bottom: 1px solid #ffeaa7;
-  font-size: 14px;
   width: 100%;
+  padding: 7px;
+  margin-top: 7px;
 }
 
 .slider-inner {
@@ -49,4 +52,16 @@
   justify-content: space-between;
   flex-direction: column;
   padding-bottom: 14px;
+}
+
+
+.rate-limit-warning {
+  background: #fff3cd;
+  color: #856404;
+  padding: 12px 0px;
+  text-align: center;
+  font-weight: 500;
+  border-bottom: 1px solid #ffeaa7;
+  font-size: 14px;
+  width: 100%;
 }

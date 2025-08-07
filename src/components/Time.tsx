@@ -26,7 +26,7 @@ const Time = ({ onSelectTimestamp }: TTimeProps) => {
 
     return (
         <div className="categories-container">
-            <div className="categories-header">Zeit</div>
+            <div className="panel-title">Zeit</div>
                 {timestamps.map((timestamp) => (
                     <div
                         className="category-item"

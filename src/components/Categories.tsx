@@ -12,7 +12,7 @@ const Categories = ({
 }) => {
     return (
     <div className="categories-container">
-        <div className="categories-header">Kategorien</div>
+        <div className="panel-title">Kategorien</div>
             {getCategoryList()
             .filter(category => (params === null || params.includes(category.toLowerCase()) || params.length === 0))
             .map((category) => (

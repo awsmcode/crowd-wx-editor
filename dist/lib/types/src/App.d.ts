@@ -8,7 +8,9 @@ type TAppProps = {
     locations: TLocation[];
     params: string[] | null;
     source: string;
+    isPublic: boolean;
+    lang: string;
 };
-declare function App({ token, locations, params, source, }: TAppProps): React.JSX.Element;
+declare function App({ token, locations, params, source, isPublic, lang, }: TAppProps): React.JSX.Element;
 export default App;
 export { App as CrowdWxEditor };

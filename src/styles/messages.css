@@ -28,7 +28,7 @@
 }
 
 .text-link {
-    color: #007bff;
+    color: var(--wxr-color-text-link);
     text-decoration: none;
     font-size: 14px;
     display: inline-flex;
@@ -38,7 +38,7 @@
 }
 
 .text-link:hover {
-    color: #0056b3;
+    color: var(--wxr-color-text-link-hover);
     text-decoration: underline;
 }
 

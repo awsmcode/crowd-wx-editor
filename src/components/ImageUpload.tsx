@@ -140,7 +140,7 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className, triggerUploadR
 
     return (
         <div className={`image-upload-container ${className || ''}`}>
-            <h2>Bild hochladen</h2>
+            <div className="panel-title">Bild hochladen</div>
             <p className="upload-description">
                 Laden Sie ein Bild hoch (max. 10MB). Unterstützte Formate: JPG, PNG, GIF, WEBP
             </p>

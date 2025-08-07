@@ -24,6 +24,7 @@ export const sendReport = (
             timestamp: report.timestamp * 1000,
             source: report.source,
             imageUrl: report.imageUrl,
+            isPublic: report.isPublic,
         }),
     })
     .then(async (response) => {

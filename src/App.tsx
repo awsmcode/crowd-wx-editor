@@ -17,6 +17,8 @@ type TAppProps = {
     locations: TLocation[];
     params: string[] | null;
     source: string;
+    isPublic: boolean;
+    lang: string;
 }
 
 function App({
@@ -24,6 +26,8 @@ function App({
     locations,
     params = [],
     source,
+    isPublic,
+    lang,
 }: TAppProps) {
     const LIMIT_MINUTES = 10;
     const [panelIndex, setPanelIndex] = useState(0);
@@ -86,6 +90,7 @@ function App({
                 timestamp,
                 source,
                 imageUrl: imageUrl || '',
+                isPublic,
             }, () => {
                 // Speichere die Zeit der erfolgreichen Meldung im localStorage
                 localStorage.setItem('lastWeatherReportTime', Date.now().toString());

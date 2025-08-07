@@ -2,19 +2,17 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 14px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.image-upload-container h2 {
+.image-upload-container {
     text-align: center;
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
+    color: var(--wxr-color-text);
+    margin-bottom: 0px;
 }
 
 .upload-description {
     text-align: center;
-    color: #666;
+    color: var(--wxr-color-text-light);
     margin-bottom: 20px;
     font-size: 0.9rem;
 }
@@ -40,13 +38,13 @@
 }
 
 .dropzone {
-    border: 2px dashed #ddd;
+    border: 2px dashed var(--wxr-color-border);
     border-radius: 12px;
     padding: 20px 20px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    background-color: #fafafa;
+    background-color: var(--wxr-color-background);
     min-height: 200px;
     display: flex;
     align-items: center;
@@ -54,13 +52,13 @@
 }
 
 .dropzone:hover {
-    border-color: #007bff;
-    background-color: #f8f9ff;
+    border-color: var(--wxr-color-border-hover);
+    background-color: var(--wxr-hover-color);
 }
 
 .dropzone.drag-active {
-    border-color: #007bff;
-    background-color: #e3f2fd;
+    border-color: var(--wxr-color-border-hover);
+    background-color: var(--wxr-hover-color);
     transform: scale(1.02);
 }
 
@@ -83,11 +81,11 @@
     width: 48px;
     height: 48px;
     margin-bottom: 16px;
-    color: #007bff;
+    color: var(--wxr-color-text-light);
 }
 
 .drag-message {
-    color: #007bff;
+    color: var(--wxr-color-text);
     font-weight: 500;
 }
 
@@ -98,17 +96,17 @@
 
 .upload-message p {
     margin: 8px 0;
-    color: #666;
+    color: var(--wxr-color-text);
 }
 
 .upload-message strong {
-    color: #333;
+    color: var(--wxr-color-text);
     font-size: 1.1rem;
 }
 
 .upload-hint {
     font-size: 0.85rem !important;
-    color: #999 !important;
+    color: var(--wxr-color-text-light) !important;
     margin-top: 8px !important;
 }
 
@@ -155,7 +153,7 @@
 .progress-bar {
     width: 100%;
     height: 8px;
-    background-color: #e9ecef;
+    background-color: var(--wxr-color-background);
     border-radius: 4px;
     overflow: hidden;
     margin-bottom: 8px;
@@ -163,7 +161,7 @@
 
 .progress-fill {
     height: 100%;
-    background-color: #007bff;
+    background-color: var(--wxr-color-accent);
     transition: width 0.3s ease;
     border-radius: 4px;
 }

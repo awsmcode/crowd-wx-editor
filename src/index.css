@@ -1,34 +1,46 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    color-scheme: light dark;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+
+    /* variables */
+    --wxr-color-background: #ffffff;
+    --wxr-color-accent: #007bff;
+
+    --wxr-color-text: #000000;
+    --wxr-color-text-light: rgb(100, 100, 100);
+    --wxr-color-text-link: #007bff;
+    --wxr-color-text-link-hover: #0056b3;
+
+    --wxr-hover-color: color-mix(in srgb, var(--wxr-color-background) 95%, black);
+    --wxr-color-border: color-mix(in srgb, var(--wxr-color-background) 90%, black);
+    --wxr-color-border-hover: color-mix(in srgb, var(--wxr-color-background) 80%, black);
+
 }
 
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
 
-
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
+    --wxr-color-background: #000000;
+    --wxr-color-accent: #007bff;
+
+    --wxr-color-text: #ffffff;
+    --wxr-color-text-light: rgb(153, 153, 153);
+    --wxr-color-text-link: #3f9cff;
+    --wxr-color-text-link-hover: #7bb9fd;
+
+    --wxr-hover-color: color-mix(in srgb, var(--wxr-color-background) 90%, white);
+    --wxr-color-border: color-mix(in srgb, var(--wxr-color-background) 80%, white);
+    --wxr-color-border-hover: color-mix(in srgb, var(--wxr-color-background) 70%, white);
   }
 }
+

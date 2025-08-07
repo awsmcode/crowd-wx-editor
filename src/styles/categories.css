@@ -1,11 +1,3 @@
-.categories-header {
-    font-size: 20px;
-    font-weight: semibold;
-    text-align: center;
-    width: 100%;
-    padding: 7px;
-    margin-top: 7px;
-}
 
 .categories-container {
     display: flex;
@@ -22,10 +14,10 @@
 .category-item {
     cursor: pointer;
     padding: 7px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--wxr-color-border);
     border-radius: 5px;
-    background-color: white;
-    color: #333;
+    background-color: var(--wxr-color-background);
+    color: var(--wxr-color-text);
     font-size: 16px;
     font-weight: semibold;
     text-align: center;
@@ -33,5 +25,6 @@
 }
 
 .category-item:hover {
-    background-color: #f0f0f0;
+    background-color: var(--wxr-hover-color);
+    border-color: var(--wxr-color-border-hover);
 }

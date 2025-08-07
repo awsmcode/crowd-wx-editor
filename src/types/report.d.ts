@@ -13,6 +13,7 @@ type TReport = {
     timestamp: number;
     source: string;
     imageUrl: string;
+    isPublic: boolean;
 }
 
 export type { TReport, TLocation };

@@ -9,7 +9,7 @@ type TAuspraegungenProps = {
 const Auspraegungen = ({ category, onSelectAuspraegung }: TAuspraegungenProps) => {
     return (
         <div className="categories-container">
-            <div className="categories-header">{category ? getParameterString(category) : ''}</div>
+            <div className="panel-title">{category ? getParameterString(category) : ''}</div>
                 {category && getAuspraegungenForCategory(category).map((auspraegung) => (
                     <div
                         className="category-item"

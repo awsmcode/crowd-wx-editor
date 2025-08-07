@@ -12,6 +12,8 @@ if (root) {
         locationsJson = root.getAttribute('data-locations'),
         token = root.getAttribute('data-token'),
         paramsJson = root.getAttribute('data-params'),
+        isPublic = root.getAttribute('data-is-public') === 'false',
+        lang = root.getAttribute('data-lang') || 'de',
         source = root.getAttribute('data-source') || 'network';
 
     let locations: TLocation[] = [];
@@ -35,7 +37,7 @@ if (root) {
 
     createRoot(root!).render(
         <StrictMode>
-          <App locations={locations} token={token} params={params} source={source} />
+          <App locations={locations} token={token} params={params} source={source} isPublic={isPublic} lang={lang} />
         </StrictMode>,
     )
 

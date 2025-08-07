@@ -22,7 +22,8 @@
     "./types": {
       "import": "./dist/lib/types/lib/main.d.ts",
       "require": "./dist/lib/types/lib/main.d.ts"
-    }
+    },
+    "./styles": "./dist/lib/styles.css"
   },
   "peerDependencies": {
     "react": "^18.2.0",
