@@ -44,7 +44,16 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
         },
+        // CSS-Datei als styles.css ausgeben
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'styles.css'
+          }
+          return 'assets/[name]-[hash][extname]'
+        }
       },
     },
+    // CSS-Handling konfigurieren
+    cssCodeSplit: false, // Alle CSS in eine Datei
   },
 })

@@ -1,0 +1,6 @@
+/* CrowdWxEditor - Zentrale Styles-Datei */
+/* Diese Datei importiert alle benötigten CSS-Dateien für die Library */
+
+@import './categories.css';
+@import './imageUpload.css';
+@import './messages.css'; 
