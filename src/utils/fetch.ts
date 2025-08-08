@@ -1,6 +1,8 @@
 import type { TReport } from "../types/report";
 
-const baseUrl = 'http://localhost:3001/data';
+const
+// baseUrl = 'http://localhost:3003';
+baseUrl = 'https://api.wettersoftware.de/crowd';
 
 export const sendReport = (
     token: string,
@@ -9,7 +11,7 @@ export const sendReport = (
     onError: () => void
 ) => {
 
-    return fetch(`${baseUrl}/add`, {
+    return fetch(`${baseUrl}/data/add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

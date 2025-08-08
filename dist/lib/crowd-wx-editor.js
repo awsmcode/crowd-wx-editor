@@ -856,7 +856,7 @@ const Kt = ({ onSelectTimestamp: e }) => {
       r.value
     ))
   ] });
-}, Ut = "http://localhost:3001/data", Yt = (e, a, n, i) => fetch(`${Ut}/add`, {
+}, Ut = "https://api.wettersoftware.de/crowd", Yt = (e, a, n, i) => fetch(`${Ut}/data/add`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
