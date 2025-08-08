@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import '../styles/imageUpload.css';
+import { baseUrl } from '../configs';
 
 interface ImageUploadProps {
     onImageUploaded?: (imageData: any) => void;
@@ -62,7 +63,7 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className, triggerUploadR
                 xhr.addEventListener('error', () => reject(new Error('Upload failed')));
                 xhr.addEventListener('abort', () => reject(new Error('Upload aborted')));
                 
-                xhr.open('POST', 'http://localhost:3001/upload/photo');
+                xhr.open('POST', `${baseUrl}/upload/photo`);
                 xhr.send(formData);
             });
 

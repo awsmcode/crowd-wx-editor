@@ -1,8 +1,6 @@
 import type { TReport } from "../types/report";
+import { baseUrl } from "../configs";
 
-const
-// baseUrl = 'http://localhost:3003';
-baseUrl = 'https://api.wettersoftware.de/crowd';
 
 export const sendReport = (
     token: string,
