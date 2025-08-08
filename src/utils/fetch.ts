@@ -7,13 +7,14 @@ export const sendReport = (
     report: TReport,
     onSuccess: () => void,
     onError: () => void
-) => {console.log(report);
+) => {
 
     return fetch(`${baseUrl}/add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            'token': String(token)
+            'token': String(token),
+            'X-API-Key': String(token)
         },
         body: JSON.stringify({
             category: report.category,

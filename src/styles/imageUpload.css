@@ -82,6 +82,7 @@
     height: 48px;
     margin-bottom: 16px;
     color: var(--wxr-color-text-light);
+    margin: auto;
 }
 
 .drag-message {

@@ -856,11 +856,12 @@ const Kt = ({ onSelectTimestamp: e }) => {
       r.value
     ))
   ] });
-}, Ut = "http://localhost:3001/data", Yt = (e, a, n, i) => (console.log(a), fetch(`${Ut}/add`, {
+}, Ut = "http://localhost:3001/data", Yt = (e, a, n, i) => fetch(`${Ut}/add`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
-    token: String(e)
+    token: String(e),
+    "X-API-Key": String(e)
   },
   body: JSON.stringify({
     category: a.category,
@@ -877,7 +878,7 @@ const Kt = ({ onSelectTimestamp: e }) => {
   r.ok ? n() : i();
 }).catch(() => {
   i();
-}));
+});
 var ea = { exports: {} }, aa = { exports: {} }, W = {};
 /** @license React v16.13.1
  * react-is.production.min.js
