@@ -1,7 +1,9 @@
 import React from 'react';
+import { getString } from "../Constants/strings";
 
 type TTimeProps = {
     onSelectTimestamp: (timestamp: number) => void;
+    lang: string;
 }
 
 function createTimestamps(base: Date | number, offsets: { label: string, minutes: number }[]) {
@@ -12,21 +14,21 @@ function createTimestamps(base: Date | number, offsets: { label: string, minutes
     }));
 }
 
-const Time = ({ onSelectTimestamp }: TTimeProps) => {
-    const baseDate = Date.now(); // new Date("2025-01-01T12:00:00"); // oder Date.now()
+const Time = ({ onSelectTimestamp, lang }: TTimeProps) => {
+    const baseDate = Date.now();
     const offsets = [
-        { label: "jetzt", minutes: 0 },
-        { label: "vor 10 Minuten", minutes: 10 },
-        { label: "vor 20 Minuten", minutes: 20 },
-        { label: "vor 30 Minuten", minutes: 30 },
-        { label: "vor eine Stunde", minutes: 60 },
+        { label: getString(lang, "TIME_NOW"), minutes: 0 },
+        { label: getString(lang, "TIME_10_MINUTES"), minutes: 10 },
+        { label: getString(lang, "TIME_20_MINUTES"), minutes: 20 },
+        { label: getString(lang, "TIME_30_MINUTES"), minutes: 30 },
+        { label: getString(lang, "TIME_60_MINUTES"), minutes: 60 },
     ];
 
     const timestamps = createTimestamps(baseDate, offsets);
 
     return (
         <div className="categories-container">
-            <div className="panel-title">Zeit</div>
+            <div className="panel-title">{getString(lang, 'TIME_TITLE')}</div>
                 {timestamps.map((timestamp) => (
                     <div
                         className="category-item"

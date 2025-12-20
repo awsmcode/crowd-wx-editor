@@ -9,9 +9,10 @@ export declare const CATEGORIES_WITH_AUSPRAEGUNGEN: {
     BEWOELKUNG: string[];
     NEBEL: string[];
     TORNADO: string[];
-}, CATEGORIES_WITH_AUSPRAEGUNGEN_ARRAY: {
-    category: string;
-    auspraegungen: string[];
-}[], getCategoryList: () => string[], getAuspraegungenList: () => string[], getCategoryForAuspraegung: (auspraegung: string) => string, getAuspraegungenForCategory: (category: string) => string[], AUSPRAEGUNGEN_STRINGS: {
-    [key: string]: string;
-}, getParameterKeys: () => (keyof typeof AUSPRAEGUNGEN_STRINGS)[], getParameterString: (key: string) => string;
+};
+export declare const getCategoryList: () => string[];
+export declare const getAuspraegungenList: () => string[];
+export declare const getCategoryForAuspraegung: (auspraegung: string) => string;
+export declare const getAuspraegungenForCategory: (category: string) => string[];
+export declare const getParameterKeys: () => string[];
+export declare const getParameterString: (key: string, lang?: string) => string;
