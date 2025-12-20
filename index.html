@@ -1,35 +1,40 @@
 <!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
 
-    <style>
-      .crowd-widget-root {
-        /* default values */
-        margin: 0 auto;
-        width: 320px;
-        height: 560px;
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + React + TS</title>
+</head>
 
-        border: 1px solid #000;
+<body>
 
-      }
-    </style>
-    <div
-      id="cw-root"
-      class="crowd-widget-root"
-      data-locations='[
-          {"place":"München","lon":11.57,"lat":48.13},
-          {"place":"Augsburg","lon":10.89,"lat":48.37}
-      ]'
-      data-params='["blitze","wind","hagel","regen"]'
-      data-token="c9720a2815ea61661b0356ab7a71d7e5"
-      data-source="wxcal"
-    ></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <style>
+    .crowd-widget-root {
+      /* default values */
+      margin: 0 auto;
+      width: 320px;
+      height: 560px;
+
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+
+    }
+  </style>
+  <div id="cw-root" class="crowd-widget-root" data-locations='[
+      {"place":"München","lon":11.57,"lat":48.13},
+      {"place":"Rosenheim","lon":12.12,"lat":47.85},
+      {"place":"Ingolstadt","lon":11.42,"lat":48.77},
+      {"place":"Freising","lon":11.75,"lat":48.40},
+      {"place":"Erding","lon":11.91,"lat":48.31},
+      {"place":"Weilheim in Oberbayern","lon":11.15,"lat":47.84},
+      {"place":"Bad Tölz","lon":11.56,"lat":47.76},
+      {"place":"Garmisch-Partenkirchen","lon":11.10,"lat":47.50}
+      
+      ]' data-params='' data-token="c9720a2815ea61661b0356ab7a71d7e5" data-source="wxcal" data-lang="de"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
