@@ -6,11 +6,11 @@ import Time from './components/Time';
 import { sendReport } from './utils/fetch';
 import type { TLocation } from './types/report';
 import ImageUpload from './components/ImageUpload';
+import { getString } from './Constants/strings';
 
 import './App.css'
 import './styles/categories.css';
 import './styles/messages.css';
-
 
 type TAppProps = {
     token: string | null;
@@ -46,7 +46,7 @@ function App({
         if (lastReportTime) {
             const timeDiff = Date.now() - parseInt(lastReportTime);
             const limitMinutes = LIMIT_MINUTES * 60 * 1000; // 10 Minuten in Millisekunden
-            
+
             if (timeDiff < limitMinutes) {
                 setShowRateLimitWarning(true);
             }
@@ -69,7 +69,7 @@ function App({
             }
             */
         }
-        
+
         if (panelIndex < 5) setPanelIndex(panelIndex + 1);
     }
 
@@ -106,7 +106,7 @@ function App({
         <div className="slider-container">
             {showRateLimitWarning && (
                 <div className="rate-limit-warning">
-                    ⚠️ Sie können nur einmal innerhalb von 10 Minuten eine Wettermeldung absetzen.
+                    {getString(lang, 'RATE_LIMIT_WARNING')}
                 </div>
             )}
             <div
@@ -119,6 +119,7 @@ function App({
                 <div className="panel panel1">
                     <Categories
                         params={params || []}
+                        lang={lang}
                         onSelectCategory={async (category) => {
                             setCategory(category);
                             await nextPanel();
@@ -127,20 +128,21 @@ function App({
                 </div>
                 <div className="panel panel2">
                     <PanelContent
-                        component={(<Auspraegungen category={category} onSelectAuspraegung={async (auspraegung) => {
+                        component={(<Auspraegungen category={category} lang={lang} onSelectAuspraegung={async (auspraegung) => {
                             setAuspraegung(auspraegung);
                             await nextPanel();
                         }}
-                    />)}    
+                    />)}
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={true}
                         showNext={false}
+                        lang={lang}
                     />
                 </div>
                 <div className="panel panel3">
                     <PanelContent
-                        component={(<Locations locations={locations} onSelectLocation={async (location) => {
+                        component={(<Locations locations={locations} lang={lang} onSelectLocation={async (location) => {
                             setLocation(location);
                             await nextPanel();
                         }} />)}
@@ -148,12 +150,13 @@ function App({
                         onPrev={prevPanel}
                         showPrev={true}
                         showNext={false}
+                        lang={lang}
                     />
                 </div>
-                
+
                 <div className="panel panel4">
                     <PanelContent
-                        component={(<Time onSelectTimestamp={async (timestamp) => {
+                        component={(<Time lang={lang} onSelectTimestamp={async (timestamp) => {
                             setTimestamp(timestamp);
                             await nextPanel();
                         }} />)}
@@ -161,28 +164,31 @@ function App({
                         onPrev={prevPanel}
                         showPrev={true}
                         showNext={false}
+                        lang={lang}
                     />
                 </div>
 
                 <div className="panel panel5">
                     <PanelContent
-                        component={(<ImageUpload 
+                        component={(<ImageUpload
+                            lang={lang}
                             triggerUploadRef={uploadTriggerRef}
                             onImageUploaded={(response) => {
                                 console.log('image uploaded', response);
                                 setImageUrl(response.s3Key);
-                            }} 
+                            }}
                         />)}
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={true}
                         showNext={true}
+                        lang={lang}
                     />
                 </div>
 
                 <div className="panel panel6 status-panel">
-                    {status === "success" && <div className="message success-message">Wettermeldung erfolgreich gesendet!</div>}
-                    {status === "error" && <div className="message error-message">Fehler beim Senden der Wettermeldung!</div>}
+                    {status === "success" && <div className="message success-message">{getString(lang, 'REPORT_SUCCESS')}</div>}
+                    {status === "error" && <div className="message error-message">{getString(lang, 'REPORT_ERROR')}</div>}
                 </div>
 
                {/* <div className="panel panel3"></div> */}
@@ -192,18 +198,16 @@ function App({
     );
 }
 
-
 type TPanelContentProps = {
     component?: any;
     onNext: () => Promise<void>;
     onPrev: () => void;
     showPrev: boolean;
     showNext: boolean;
+    lang: string;
 }
 
-
-
-function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelContentProps) {
+function PanelContent({ component, onNext, onPrev, showPrev, showNext, lang }: TPanelContentProps) {
     return (
         <div className="panel-content">
             {component && component}
@@ -213,12 +217,12 @@ function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelC
                         <svg className="arrow-left" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5H1m0 0l4 4M1 5l4-4"></path>
                         </svg>
-                        Zurück
+                        {getString(lang, 'BACK')}
                     </a>
                 )}
                 {showNext && (
                     <a href="#" onClick={async (e) => { e.preventDefault(); await onNext(); }} className="text-link">
-                        Weiter
+                        {getString(lang, 'NEXT')}
                         <svg className="arrow-right" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"></path>
                         </svg>
@@ -228,7 +232,6 @@ function PanelContent({ component, onNext, onPrev, showPrev, showNext }: TPanelC
         </div>
     );
 }
-
 
 export default App
 export { App as CrowdWxEditor }

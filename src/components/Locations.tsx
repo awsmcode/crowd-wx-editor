@@ -1,15 +1,17 @@
 import React from 'react'; /** @jsxImportSource react */
+import { getString } from "../Constants/strings";
 import type { TLocation } from "../types/report";
 
 type TLocationProps = {
     locations: TLocation[];
     onSelectLocation: (location: TLocation) => void;
+    lang: string;
 }
 
-const Locations = ({ locations, onSelectLocation }: TLocationProps) => {
+const Locations = ({ locations, onSelectLocation, lang }: TLocationProps) => {
     return (
         <div className="categories-container">
-            <div className="panel-title">Standort</div>
+            <div className="panel-title">{getString(lang, 'LOCATION_TITLE')}</div>
                 {locations.map((location) => (
                     <div
                         className="category-item"
