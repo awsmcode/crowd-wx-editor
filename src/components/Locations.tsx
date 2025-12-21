@@ -1,5 +1,5 @@
 import React from 'react'; /** @jsxImportSource react */
-import { getString } from "../Constants/strings";
+import { getString } from "../constants/strings";
 import type { TLocation } from "../types/report";
 
 type TLocationProps = {
