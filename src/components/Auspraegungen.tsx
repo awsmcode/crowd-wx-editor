@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAuspraegungenForCategory, getParameterString } from "../utils/parameters";
 
-import { getString } from "../constants/stringList";
+import { getString } from "../configs/stringList";
 
 type TAuspraegungenProps = {
     category: string | null;

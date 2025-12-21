@@ -1,4 +1,4 @@
-import { getString } from '../constants/stringList';
+import { getString } from '../configs/stringList';
 
 export const CATEGORIES_WITH_AUSPRAEGUNGEN = {
     BLITZE: ['DONNER_UMGEBUNG', 'BLITZE_EINZELNE', 'BLITZE_HAEUFIG', 'BLITZE_EXTREM'],

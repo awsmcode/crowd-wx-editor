@@ -1,5 +1,5 @@
 import React from 'react';
-import { getString } from "../constants/stringList";
+import { getString } from "../configs/stringList";
 
 type TTimeProps = {
     onSelectTimestamp: (timestamp: number) => void;
