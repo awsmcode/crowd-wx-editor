@@ -6,7 +6,7 @@ import Time from './components/Time';
 import { sendReport } from './utils/fetch';
 import type { TLocation } from './types/report';
 import ImageUpload from './components/ImageUpload';
-import { getString } from './Constants/strings';
+import { getString } from './constants/strings';
 
 import './App.css'
 import './styles/categories.css';
