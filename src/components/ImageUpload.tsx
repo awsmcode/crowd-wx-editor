@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import '../styles/imageUpload.css';
 import { baseUrl } from '../configs';
-import { getString } from '../constants/stringList';
+import { getString } from '../configs/stringList';
 
 interface ImageUploadProps {
     onImageUploaded?: (imageData: any) => void;
