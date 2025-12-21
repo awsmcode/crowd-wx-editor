@@ -54,7 +54,7 @@ function App({
     }, []);
 
     function goToPanel(idx: number) {
-      setPanelIndex(idx);
+        setPanelIndex(idx);
     }
 
     async function nextPanel() {
@@ -132,7 +132,7 @@ function App({
                             setAuspraegung(auspraegung);
                             await nextPanel();
                         }}
-                    />)}
+                        />)}
                         onNext={nextPanel}
                         onPrev={prevPanel}
                         showPrev={true}
@@ -191,7 +191,7 @@ function App({
                     {status === "error" && <div className="message error-message">{getString(lang, 'REPORT_ERROR')}</div>}
                 </div>
 
-               {/* <div className="panel panel3"></div> */}
+                {/* <div className="panel panel3"></div> */}
             </div>
 
         </div>

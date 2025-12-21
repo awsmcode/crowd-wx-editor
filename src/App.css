@@ -1,10 +1,13 @@
 .slider-container {
-  width: 100%;
-  height: 100%; 
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
   overflow: hidden;
   position: relative;
   background-color: var(--wxr-color-background);
   color: var(--wxr-color-text);
+  border: 1px solid var(--wxr-color-border);
+  border-radius: 10px;
+  margin: 2px;
 }
 
 
@@ -22,7 +25,7 @@
 .slider-inner {
   display: flex;
   height: 100%;
-  transition: transform 0.5s cubic-bezier(.77,0,.18,1);
+  transition: transform 0.5s cubic-bezier(.77, 0, .18, 1);
 }
 
 .panel {
@@ -53,7 +56,6 @@
   flex-direction: column;
   padding-bottom: 14px;
 }
-
 
 .rate-limit-warning {
   background: #fff3cd;
