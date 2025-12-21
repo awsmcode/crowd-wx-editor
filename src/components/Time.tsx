@@ -1,5 +1,5 @@
 import React from 'react';
-import { getString } from "../constants/strings";
+import { getString } from "../constants/stringList";
 
 type TTimeProps = {
     onSelectTimestamp: (timestamp: number) => void;
@@ -29,19 +29,19 @@ const Time = ({ onSelectTimestamp, lang }: TTimeProps) => {
     return (
         <div className="categories-container">
             <div className="panel-title">{getString(lang, 'TIME_TITLE')}</div>
-                {timestamps.map((timestamp) => (
-                    <div
-                        className="category-item"
-                        onClick={() => {
-                            onSelectTimestamp(timestamp.value);
-                        }}
-                        key={timestamp.value}
-                    >
-                        {timestamp.label}
-                    </div>
-                ))}
+            {timestamps.map((timestamp) => (
+                <div
+                    className="category-item"
+                    onClick={() => {
+                        onSelectTimestamp(timestamp.value);
+                    }}
+                    key={timestamp.value}
+                >
+                    {timestamp.label}
+                </div>
+            ))}
         </div>
-        )
+    )
 };
 
 export default Time;

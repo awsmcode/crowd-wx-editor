@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAuspraegungenForCategory, getParameterString } from "../utils/parameters";
 
-import { getString } from "../constants/strings";
+import { getString } from "../constants/stringList";
 
 type TAuspraegungenProps = {
     category: string | null;
@@ -13,17 +13,17 @@ const Auspraegungen = ({ category, onSelectAuspraegung, lang }: TAuspraegungenPr
     return (
         <div className="categories-container">
             <div className="panel-title">{category ? getParameterString(category, lang) : getString(lang, 'CATEGORIES_TITLE')}</div>
-                {category && getAuspraegungenForCategory(category).map((auspraegung) => (
-                    <div
-                        className="category-item"
-                        onClick={() => {
-                            onSelectAuspraegung(auspraegung);
-                        }}
-                        key={auspraegung}
-                    >
-                        {getParameterString(auspraegung, lang)}
-                    </div>
-                ))}
+            {category && getAuspraegungenForCategory(category).map((auspraegung) => (
+                <div
+                    className="category-item"
+                    onClick={() => {
+                        onSelectAuspraegung(auspraegung);
+                    }}
+                    key={auspraegung}
+                >
+                    {getParameterString(auspraegung, lang)}
+                </div>
+            ))}
         </div>
     )
 };

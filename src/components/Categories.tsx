@@ -1,6 +1,6 @@
 import React from 'react';
 import { getParameterString, getCategoryList } from "../utils/parameters";
-import { getString } from "../constants/strings";
+import { getString } from "../constants/stringList";
 
 import "../styles/categories.css";
 
