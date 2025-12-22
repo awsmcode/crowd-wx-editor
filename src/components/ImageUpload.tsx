@@ -74,19 +74,9 @@ const ImageUpload = ({ /* onImageUploaded, */ onUploadError, className, triggerU
                 setUploadProgress(100);
                 try {
                     const result = JSON.parse(response.responseText);
-                    console.log('Upload erfolgreich:', result);
-                    // Callback für erfolgreichen Upload
-                    /*if (onImageUploaded) {
-                        onImageUploaded(result); }
-                        */
                     return result.s3Key;
 
                 } catch (e) {
-                    console.log('Upload erfolgreich, aber keine JSON-Antwort');
-                    /*if (onImageUploaded) {
-                        onImageUploaded({ fileName: 'unknown', size: 0, type: 'unknown' });
-                        return '';
-                    }*/
                     return '';
                 }
             } else {

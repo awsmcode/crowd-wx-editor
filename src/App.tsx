@@ -58,28 +58,13 @@ function App({
         }
     }, []);
 
-    /*
-    function goToPanelById(panelId: TPanelId) {
-        const targetIndex = panelOrder.indexOf(panelId);
-
-        if (targetIndex !== -1) setPanelIndex(targetIndex);
-    }
-    */
     async function nextPanel() {
         const uploadPanelIndex = panelOrder.indexOf('upload');
 
         // Wenn wir im Upload-Panel sind (panel5) und ein Bild hochgeladen werden soll
         if (uploadPanelIndex !== -1 && panelIndex === uploadPanelIndex && uploadTriggerRef.current) {
             const uploadSuccess = await uploadTriggerRef.current();
-            console.log('uploadSuccess', `#${uploadSuccess}#`);
             setImageUrl(uploadSuccess);
-            /* if (uploadSuccess !== '') setImageUrl(uploadSuccess);
-         
-           if (!uploadSuccess) {
-               // Upload fehlgeschlagen, nicht weitergehen
-               return;
-           }
-           */
         }
 
         if (panelIndex < panelOrder.length - 1) setPanelIndex(panelIndex + 1);
@@ -88,8 +73,6 @@ function App({
     function prevPanel() {
         if (panelIndex > 0) setPanelIndex(panelIndex - 1);
     }
-
-
 
     function renderPanel(panelId: TPanelId) {
         switch (panelId) {
@@ -185,7 +168,6 @@ function App({
                         component={(
                             <Status
                                 lang={lang}
-                                status={null}
                                 data={{
                                     token,
                                     category,
