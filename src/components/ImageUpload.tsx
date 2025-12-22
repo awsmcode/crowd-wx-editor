@@ -5,14 +5,14 @@ import { baseUrl } from '../configs';
 import { getString } from '../configs/stringList';
 
 interface ImageUploadProps {
-    onImageUploaded?: (imageData: any) => void;
+    // onImageUploaded?: (imageData: any) => void;
     onUploadError?: (error: string) => void;
     className?: string;
-    triggerUploadRef?: React.MutableRefObject<(() => Promise<boolean>) | null>;
+    triggerUploadRef?: React.MutableRefObject<(() => Promise<string>) | null>;
     lang?: string;
 }
 
-const ImageUpload = ({ onImageUploaded, onUploadError, className, triggerUploadRef, lang = 'de' }: ImageUploadProps) => {
+const ImageUpload = ({ /* onImageUploaded, */ onUploadError, className, triggerUploadRef, lang = 'de' }: ImageUploadProps) => {
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -41,7 +41,7 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className, triggerUploadR
         }
     }, [lang]);
 
-    const uploadFile = async (file: File): Promise<void> => {
+    const uploadFile = async (file: File): Promise<string> => {
         setUploadStatus('uploading');
         setUploadProgress(0);
 
@@ -76,14 +76,18 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className, triggerUploadR
                     const result = JSON.parse(response.responseText);
                     console.log('Upload erfolgreich:', result);
                     // Callback für erfolgreichen Upload
-                    if (onImageUploaded) {
-                        onImageUploaded(result);
-                    }
+                    /*if (onImageUploaded) {
+                        onImageUploaded(result); }
+                        */
+                    return result.s3Key;
+
                 } catch (e) {
                     console.log('Upload erfolgreich, aber keine JSON-Antwort');
-                    if (onImageUploaded) {
+                    /*if (onImageUploaded) {
                         onImageUploaded({ fileName: 'unknown', size: 0, type: 'unknown' });
-                    }
+                        return '';
+                    }*/
+                    return '';
                 }
             } else {
                 const errorMsg = `${getString(lang, 'ERROR_UPLOAD_WITH_STATUS')} ${response.status} ${response.statusText}`;
@@ -104,6 +108,7 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className, triggerUploadR
             }
             throw error;
         }
+        return '';
     };
 
     const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
@@ -122,16 +127,16 @@ const ImageUpload = ({ onImageUploaded, onUploadError, className, triggerUploadR
         setErrorMessage('');
     };
 
-    const handleUpload = async (): Promise<boolean> => {
+    const handleUpload = async (): Promise<string> => {
         if (uploadedFile) {
             try {
-                await uploadFile(uploadedFile);
-                return true;
+                const s3Key = await uploadFile(uploadedFile);
+                return s3Key;
             } catch (error) {
-                return false;
+                return '';
             }
         }
-        return true; // Kein Bild vorhanden, also erfolgreich
+        return ''; // Kein Bild vorhanden, also erfolgreich
     };
 
     // Expose the upload function via ref

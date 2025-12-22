@@ -113,6 +113,8 @@ const enStrings: Record<string, string> = {
     TORNADO_F2: 'significant',
     TORNADO_F3: 'severe',
     TORNADO_F4: 'devastating',
+
+    STATUS_TITLE: 'Summary',
 };
 
 export default enStrings;

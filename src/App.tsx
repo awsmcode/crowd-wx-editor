@@ -3,9 +3,11 @@ import Categories from './components/Categories';
 import Auspraegungen from './components/Auspraegungen';
 import Locations from './components/Locations';
 import Time from './components/Time';
-import { sendReport } from './utils/fetch';
-import type { TLocation } from './types/report';
 import ImageUpload from './components/ImageUpload';
+import Status from './components/Status';
+
+
+import type { TLocation } from './types/report';
 import { getString } from './configs/stringList';
 
 import './App.css'
@@ -39,10 +41,9 @@ function App({
     const [auspraegung, setAuspraegung] = useState<string | null>(null);
     const [location, setLocation] = useState<TLocation | null>(null);
     const [timestamp, setTimestamp] = useState<number>(Date.now());
-    const [status, setStatus] = useState<string | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [showRateLimitWarning, setShowRateLimitWarning] = useState(false);
-    const uploadTriggerRef = useRef<(() => Promise<boolean>) | null>(null);
+    const uploadTriggerRef = useRef<(() => Promise<string>) | null>(null);
 
     // Prüfe beim Laden der Komponente, ob eine kürzliche Meldung existiert
     useEffect(() => {
@@ -57,25 +58,28 @@ function App({
         }
     }, []);
 
+    /*
     function goToPanelById(panelId: TPanelId) {
         const targetIndex = panelOrder.indexOf(panelId);
 
         if (targetIndex !== -1) setPanelIndex(targetIndex);
     }
-
+    */
     async function nextPanel() {
         const uploadPanelIndex = panelOrder.indexOf('upload');
 
         // Wenn wir im Upload-Panel sind (panel5) und ein Bild hochgeladen werden soll
         if (uploadPanelIndex !== -1 && panelIndex === uploadPanelIndex && uploadTriggerRef.current) {
             const uploadSuccess = await uploadTriggerRef.current();
-            console.log('uploadSuccess', uploadSuccess);
-            /*
-            if (!uploadSuccess) {
-                // Upload fehlgeschlagen, nicht weitergehen
-                return;
-            }
-            */
+            console.log('uploadSuccess', `#${uploadSuccess}#`);
+            setImageUrl(uploadSuccess);
+            /* if (uploadSuccess !== '') setImageUrl(uploadSuccess);
+         
+           if (!uploadSuccess) {
+               // Upload fehlgeschlagen, nicht weitergehen
+               return;
+           }
+           */
         }
 
         if (panelIndex < panelOrder.length - 1) setPanelIndex(panelIndex + 1);
@@ -85,116 +89,124 @@ function App({
         if (panelIndex > 0) setPanelIndex(panelIndex - 1);
     }
 
-    useEffect(() => {
-        const statusPanelIndex = panelOrder.indexOf('status');
 
-        if (token && category && auspraegung && location && panelIndex === statusPanelIndex && status === null) {
-            const
-                { lat, lon, place } = location;
-            sendReport(token, {
-                category,
-                auspraegung,
-                lat,
-                lon,
-                place,
-                timestamp,
-                source,
-                imageUrl: imageUrl || '',
-                isPublic,
-            }, () => {
-                // Speichere die Zeit der erfolgreichen Meldung im localStorage
-                localStorage.setItem('lastWeatherReportTime', Date.now().toString());
-                goToPanelById('status');
-                setStatus("success");
-            }, () => {
-                setStatus("error");
-            });
-        }
-    }, [panelIndex]);
 
     function renderPanel(panelId: TPanelId) {
         switch (panelId) {
-        case 'categories':
-            return (
-                <Categories
-                    params={params || []}
-                    lang={lang}
-                    onSelectCategory={async (category) => {
-                        setCategory(category);
-                        await nextPanel();
-                    }}
-                />
-            );
-        case 'auspraegungen':
-            return (
-                <PanelContent
-                    component={(<Auspraegungen category={category} lang={lang} onSelectAuspraegung={async (auspraegung) => {
-                        setAuspraegung(auspraegung);
-                        await nextPanel();
-                    }}
-                    />)}
-                    onNext={nextPanel}
-                    onPrev={prevPanel}
-                    showPrev={true}
-                    showNext={false}
-                    lang={lang}
-                />
-            );
-        case 'locations':
-            return (
-                <PanelContent
-                    component={(<Locations locations={locations} lang={lang} onSelectLocation={async (location) => {
-                        setLocation(location);
-                        await nextPanel();
-                    }} />)}
-                    onNext={nextPanel}
-                    onPrev={prevPanel}
-                    showPrev={true}
-                    showNext={false}
-                    lang={lang}
-                />
-            );
-        case 'time':
-            return (
-                <PanelContent
-                    component={(<Time lang={lang} onSelectTimestamp={async (timestamp) => {
-                        setTimestamp(timestamp);
-                        await nextPanel();
-                    }} />)}
-                    onNext={nextPanel}
-                    onPrev={prevPanel}
-                    showPrev={true}
-                    showNext={false}
-                    lang={lang}
-                />
-            );
-        case 'upload':
-            return (
-                <PanelContent
-                    component={(<ImageUpload
+            case 'categories':
+                return (
+                    <Categories
+                        params={params || []}
                         lang={lang}
-                        triggerUploadRef={uploadTriggerRef}
-                        onImageUploaded={(response) => {
-                            console.log('image uploaded', response);
-                            setImageUrl(response.s3Key);
+                        onSelectCategory={async (category) => {
+                            setCategory(category);
+                            await nextPanel();
                         }}
-                    />)}
-                    onNext={nextPanel}
-                    onPrev={prevPanel}
-                    showPrev={true}
-                    showNext={true}
-                    lang={lang}
-                />
-            );
-        case 'status':
-            return (
-                <div className="panel6 status-panel">
-                    {status === "success" && <div className="message success-message">{getString(lang, 'REPORT_SUCCESS')}</div>}
-                    {status === "error" && <div className="message error-message">{getString(lang, 'REPORT_ERROR')}</div>}
-                </div>
-            );
-        default:
-            return null;
+                    />
+                );
+            case 'auspraegungen':
+                return (
+                    <PanelContent
+                        component={(
+                            <Auspraegungen
+                                category={category}
+                                lang={lang}
+                                onSelectAuspraegung={async (auspraegung) => {
+                                    setAuspraegung(auspraegung);
+                                    await nextPanel();
+                                }}
+                            />
+                        )}
+                        onNext={nextPanel}
+                        onPrev={prevPanel}
+                        showPrev={true}
+                        showNext={false}
+                        lang={lang}
+                    />
+                );
+            case 'locations':
+                return (
+                    <PanelContent
+                        component={(
+                            <Locations
+                                locations={locations}
+                                lang={lang}
+                                onSelectLocation={async (location) => {
+                                    setLocation(location);
+                                    await nextPanel();
+                                }}
+                            />
+                        )}
+                        onNext={nextPanel}
+                        onPrev={prevPanel}
+                        showPrev={true}
+                        showNext={false}
+                        lang={lang}
+                    />
+                );
+            case 'time':
+                return (
+                    <PanelContent
+                        component={(
+                            <Time
+                                lang={lang}
+                                onSelectTimestamp={async (timestamp) => {
+                                    setTimestamp(timestamp);
+                                    await nextPanel();
+                                }}
+                            />
+                        )}
+                        onNext={nextPanel}
+                        onPrev={prevPanel}
+                        showPrev={true}
+                        showNext={false}
+                        lang={lang}
+                    />
+                );
+            case 'upload':
+                return (
+                    <PanelContent
+                        component={(
+                            <ImageUpload
+                                lang={lang}
+                                triggerUploadRef={uploadTriggerRef}
+                            />
+                        )}
+                        onNext={nextPanel}
+                        onPrev={prevPanel}
+                        showPrev={true}
+                        showNext={true}
+                        lang={lang}
+                    />
+                );
+            case 'status':
+                return (
+                    <PanelContent
+                        component={(
+                            <Status
+                                lang={lang}
+                                status={null}
+                                data={{
+                                    token,
+                                    category,
+                                    auspraegung,
+                                    location,
+                                    timestamp,
+                                    source,
+                                    imageUrl,
+                                    isPublic,
+                                }}
+                            />
+                        )}
+                        onNext={nextPanel}
+                        onPrev={prevPanel}
+                        showPrev={false}
+                        showNext={false}
+                        lang={lang}
+                    />
+                );
+            default:
+                return null;
         }
     }
 

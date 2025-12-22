@@ -113,6 +113,8 @@ const deStrings: Record<string, string> = {
     TORNADO_F2: 'signifikant',
     TORNADO_F3: 'schwer',
     TORNADO_F4: 'verheerend',
+
+    STATUS_TITLE: 'Zusammenfassung',
 };
 
 export default deStrings;

@@ -113,6 +113,8 @@ const roStrings: Record<string, string> = {
     TORNADO_F2: 'semnificativă',
     TORNADO_F3: 'severă',
     TORNADO_F4: 'devastatoare',
+
+    STATUS_TITLE: 'Rezumat',
 };
 
 export default roStrings;

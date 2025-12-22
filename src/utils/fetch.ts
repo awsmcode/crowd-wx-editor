@@ -8,7 +8,6 @@ export const sendReport = (
     onSuccess: () => void,
     onError: () => void
 ) => {
-
     return fetch(`${baseUrl}/data/add`, {
         method: "POST",
         headers: {
@@ -28,17 +27,17 @@ export const sendReport = (
             isPublic: report.isPublic,
         }),
     })
-    .then(async (response) => {
-        if (!response.ok) {
-            // const err = await response.json();
-            // console.log(err);
-            // alert("Fehler: " + JSON.stringify(err));
+        .then(async (response) => {
+            if (!response.ok) {
+                // const err = await response.json();
+                // console.log(err);
+                // alert("Fehler: " + JSON.stringify(err));
+                onError();
+            } else {
+                onSuccess();
+            }
+        })
+        .catch(() => {
             onError();
-        } else {
-            onSuccess();
-        }
-    })
-    .catch(() => {
-        onError();
-    });
+        });
 }
