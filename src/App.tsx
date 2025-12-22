@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import Categories from './components/Categories';
 import Auspraegungen from './components/Auspraegungen';
 import Locations from './components/Locations';
@@ -35,7 +35,13 @@ function App({
     lang,
 }: TAppProps) {
     const LIMIT_MINUTES = 10;
-    const panelOrder: TPanelId[] = [...PANEL_ORDER];
+    const panelOrder: TPanelId[] = useMemo(() => {
+        if (locations.length === 1) {
+            return PANEL_ORDER.filter((panel) => panel !== 'locations');
+        }
+
+        return [...PANEL_ORDER];
+    }, [locations.length]);
     const [panelIndex, setPanelIndex] = useState(0);
     const [category, setCategory] = useState<string | null>(null);
     const [auspraegung, setAuspraegung] = useState<string | null>(null);
@@ -57,6 +63,18 @@ function App({
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (locations.length === 1) {
+            setLocation((current) => current ?? locations[0]);
+        }
+    }, [locations]);
+
+    useEffect(() => {
+        if (panelIndex >= panelOrder.length) {
+            setPanelIndex(Math.max(panelOrder.length - 1, 0));
+        }
+    }, [panelIndex, panelOrder.length]);
 
     async function nextPanel() {
         const uploadPanelIndex = panelOrder.indexOf('upload');
