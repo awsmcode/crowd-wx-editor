@@ -12,6 +12,9 @@ import './App.css'
 import './styles/categories.css';
 import './styles/messages.css';
 
+const PANEL_ORDER = ['categories', 'auspraegungen', 'locations', 'time', 'upload', 'status'] as const;
+type TPanelId = typeof PANEL_ORDER[number];
+
 type TAppProps = {
     token: string | null;
     locations: TLocation[];
@@ -30,6 +33,7 @@ function App({
     lang,
 }: TAppProps) {
     const LIMIT_MINUTES = 10;
+    const panelOrder: TPanelId[] = [...PANEL_ORDER];
     const [panelIndex, setPanelIndex] = useState(0);
     const [category, setCategory] = useState<string | null>(null);
     const [auspraegung, setAuspraegung] = useState<string | null>(null);
@@ -53,13 +57,17 @@ function App({
         }
     }, []);
 
-    function goToPanel(idx: number) {
-        setPanelIndex(idx);
+    function goToPanelById(panelId: TPanelId) {
+        const targetIndex = panelOrder.indexOf(panelId);
+
+        if (targetIndex !== -1) setPanelIndex(targetIndex);
     }
 
     async function nextPanel() {
+        const uploadPanelIndex = panelOrder.indexOf('upload');
+
         // Wenn wir im Upload-Panel sind (panel5) und ein Bild hochgeladen werden soll
-        if (panelIndex === 4 && uploadTriggerRef.current) {
+        if (uploadPanelIndex !== -1 && panelIndex === uploadPanelIndex && uploadTriggerRef.current) {
             const uploadSuccess = await uploadTriggerRef.current();
             console.log('uploadSuccess', uploadSuccess);
             /*
@@ -70,7 +78,7 @@ function App({
             */
         }
 
-        if (panelIndex < 5) setPanelIndex(panelIndex + 1);
+        if (panelIndex < panelOrder.length - 1) setPanelIndex(panelIndex + 1);
     }
 
     function prevPanel() {
@@ -78,7 +86,9 @@ function App({
     }
 
     useEffect(() => {
-        if (token && category && auspraegung && location && panelIndex === 5 && status === null) {
+        const statusPanelIndex = panelOrder.indexOf('status');
+
+        if (token && category && auspraegung && location && panelIndex === statusPanelIndex && status === null) {
             const
                 { lat, lon, place } = location;
             sendReport(token, {
@@ -94,13 +104,99 @@ function App({
             }, () => {
                 // Speichere die Zeit der erfolgreichen Meldung im localStorage
                 localStorage.setItem('lastWeatherReportTime', Date.now().toString());
-                goToPanel(5);
+                goToPanelById('status');
                 setStatus("success");
             }, () => {
                 setStatus("error");
             });
         }
     }, [panelIndex]);
+
+    function renderPanel(panelId: TPanelId) {
+        switch (panelId) {
+        case 'categories':
+            return (
+                <Categories
+                    params={params || []}
+                    lang={lang}
+                    onSelectCategory={async (category) => {
+                        setCategory(category);
+                        await nextPanel();
+                    }}
+                />
+            );
+        case 'auspraegungen':
+            return (
+                <PanelContent
+                    component={(<Auspraegungen category={category} lang={lang} onSelectAuspraegung={async (auspraegung) => {
+                        setAuspraegung(auspraegung);
+                        await nextPanel();
+                    }}
+                    />)}
+                    onNext={nextPanel}
+                    onPrev={prevPanel}
+                    showPrev={true}
+                    showNext={false}
+                    lang={lang}
+                />
+            );
+        case 'locations':
+            return (
+                <PanelContent
+                    component={(<Locations locations={locations} lang={lang} onSelectLocation={async (location) => {
+                        setLocation(location);
+                        await nextPanel();
+                    }} />)}
+                    onNext={nextPanel}
+                    onPrev={prevPanel}
+                    showPrev={true}
+                    showNext={false}
+                    lang={lang}
+                />
+            );
+        case 'time':
+            return (
+                <PanelContent
+                    component={(<Time lang={lang} onSelectTimestamp={async (timestamp) => {
+                        setTimestamp(timestamp);
+                        await nextPanel();
+                    }} />)}
+                    onNext={nextPanel}
+                    onPrev={prevPanel}
+                    showPrev={true}
+                    showNext={false}
+                    lang={lang}
+                />
+            );
+        case 'upload':
+            return (
+                <PanelContent
+                    component={(<ImageUpload
+                        lang={lang}
+                        triggerUploadRef={uploadTriggerRef}
+                        onImageUploaded={(response) => {
+                            console.log('image uploaded', response);
+                            setImageUrl(response.s3Key);
+                        }}
+                    />)}
+                    onNext={nextPanel}
+                    onPrev={prevPanel}
+                    showPrev={true}
+                    showNext={true}
+                    lang={lang}
+                />
+            );
+        case 'status':
+            return (
+                <div className="panel6 status-panel">
+                    {status === "success" && <div className="message success-message">{getString(lang, 'REPORT_SUCCESS')}</div>}
+                    {status === "error" && <div className="message error-message">{getString(lang, 'REPORT_ERROR')}</div>}
+                </div>
+            );
+        default:
+            return null;
+        }
+    }
 
     return (
         <div className="slider-container">
@@ -112,86 +208,16 @@ function App({
             <div
                 className="slider-inner"
                 style={{
-                    transform: `translateX(-${panelIndex * 16.666666666666666}%)`,
-                    width: `600%`,
+                    transform: `translateX(-${panelIndex * (100 / panelOrder.length)}%)`,
+                    width: `${panelOrder.length * 100}%`,
                 }}
             >
-                <div className="panel panel1">
-                    <Categories
-                        params={params || []}
-                        lang={lang}
-                        onSelectCategory={async (category) => {
-                            setCategory(category);
-                            await nextPanel();
-                        }}
-                    />
-                </div>
-                <div className="panel panel2">
-                    <PanelContent
-                        component={(<Auspraegungen category={category} lang={lang} onSelectAuspraegung={async (auspraegung) => {
-                            setAuspraegung(auspraegung);
-                            await nextPanel();
-                        }}
-                        />)}
-                        onNext={nextPanel}
-                        onPrev={prevPanel}
-                        showPrev={true}
-                        showNext={false}
-                        lang={lang}
-                    />
-                </div>
-                <div className="panel panel3">
-                    <PanelContent
-                        component={(<Locations locations={locations} lang={lang} onSelectLocation={async (location) => {
-                            setLocation(location);
-                            await nextPanel();
-                        }} />)}
-                        onNext={nextPanel}
-                        onPrev={prevPanel}
-                        showPrev={true}
-                        showNext={false}
-                        lang={lang}
-                    />
-                </div>
+                {panelOrder.map((panelId) => (
+                    <div key={panelId} className={`panel panel-${panelId}`}>
+                        {renderPanel(panelId)}
+                    </div>
+                ))}
 
-                <div className="panel panel4">
-                    <PanelContent
-                        component={(<Time lang={lang} onSelectTimestamp={async (timestamp) => {
-                            setTimestamp(timestamp);
-                            await nextPanel();
-                        }} />)}
-                        onNext={nextPanel}
-                        onPrev={prevPanel}
-                        showPrev={true}
-                        showNext={false}
-                        lang={lang}
-                    />
-                </div>
-
-                <div className="panel panel5">
-                    <PanelContent
-                        component={(<ImageUpload
-                            lang={lang}
-                            triggerUploadRef={uploadTriggerRef}
-                            onImageUploaded={(response) => {
-                                console.log('image uploaded', response);
-                                setImageUrl(response.s3Key);
-                            }}
-                        />)}
-                        onNext={nextPanel}
-                        onPrev={prevPanel}
-                        showPrev={true}
-                        showNext={true}
-                        lang={lang}
-                    />
-                </div>
-
-                <div className="panel panel6 status-panel">
-                    {status === "success" && <div className="message success-message">{getString(lang, 'REPORT_SUCCESS')}</div>}
-                    {status === "error" && <div className="message error-message">{getString(lang, 'REPORT_ERROR')}</div>}
-                </div>
-
-                {/* <div className="panel panel3"></div> */}
             </div>
 
         </div>
