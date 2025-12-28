@@ -28,7 +28,7 @@
   transition: transform 0.5s cubic-bezier(.77, 0, .18, 1);
 }
 
-.panel {
+.panel-container {
   width: 100%;
   max-width: 100%;
   height: 100%;
