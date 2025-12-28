@@ -225,7 +225,7 @@ function App({
                 }}
             >
                 {panelOrder.map((panelId) => (
-                    <div key={panelId} className={`panel panel-${panelId}`}>
+                    <div key={panelId} className={`panel-container panel-${panelId}`}>
                         {renderPanel(panelId)}
                     </div>
                 ))}
