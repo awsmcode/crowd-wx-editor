@@ -9,6 +9,7 @@
     "buildxxx": "tsc -b && vite build",
     "build": "tsc --p ./tsconfig.module.build.json && vite build",
     "build:lib": "tsc --p ./tsconfig.module.build.json && vite build --config vite.config.lib.ts",
+    "build:browser": "vite build --config vite.config.browser.ts",
     "lint": "eslint .",
     "preview": "vite preview",
     "types": "tsc --emitDeclarationOnly"
