@@ -10,9 +10,10 @@ interface ImageUploadProps {
     className?: string;
     triggerUploadRef?: React.MutableRefObject<(() => Promise<string>) | null>;
     lang?: string;
+    token?: string | null;
 }
 
-const ImageUpload = ({ /* onImageUploaded, */ onUploadError, className, triggerUploadRef, lang = 'de' }: ImageUploadProps) => {
+const ImageUpload = ({ /* onImageUploaded, */ onUploadError, className, triggerUploadRef, lang = 'de', token }: ImageUploadProps) => {
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -66,6 +67,10 @@ const ImageUpload = ({ /* onImageUploaded, */ onUploadError, className, triggerU
                 xhr.addEventListener('abort', () => reject(new Error('Upload aborted')));
 
                 xhr.open('POST', `${baseUrl}/upload/photo`);
+                if (token) {
+                    xhr.setRequestHeader('token', String(token));
+                    xhr.setRequestHeader('X-API-Key', String(token));
+                }
                 xhr.send(formData);
             });
 
