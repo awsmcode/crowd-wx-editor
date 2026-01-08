@@ -170,6 +170,7 @@ function App({
                         component={(
                             <ImageUpload
                                 lang={lang}
+                                token={token}
                                 triggerUploadRef={uploadTriggerRef}
                             />
                         )}
