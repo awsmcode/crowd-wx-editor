@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { getString } from "../configs/stringList";
 import { sendReport } from '../utils/fetch';
+import { callHostCallback } from '../utils/hostCallback';
 import type { TLocation } from '../types/report';
 import "../styles/status.css";
 
@@ -33,7 +34,7 @@ const Status = ({
         if (token && category && auspraegung && location && imageUrl !== null && reportStatus === null) {
             const
                 { lat, lon, place } = location;
-            sendReport(token, {
+            const reportPayload = {
                 category,
                 auspraegung,
                 lat,
@@ -43,12 +44,17 @@ const Status = ({
                 source,
                 imageUrl: imageUrl || '',
                 isPublic,
+            };
+            sendReport(token, {
+                ...reportPayload,
             }, () => {
                 // Speichere die Zeit der erfolgreichen Meldung im localStorage
                 localStorage.setItem('lastWeatherReportTime', Date.now().toString());
                 setReportStatus("success");
+                callHostCallback({ status: 'success', report: reportPayload });
             }, () => {
                 setReportStatus("error");
+                callHostCallback({ status: 'error', report: reportPayload });
             });
         }
     }, [data]);

@@ -10,6 +10,11 @@
 
 <body>
 
+  <script>
+    function testCallbackTest(payload) {
+      console.log('testCallbackTest', payload);
+    }
+  </script>
   <style>
     .crowd-widget-root {
       /* default values */
@@ -28,7 +33,9 @@
       {"place":"Bad Tölz","lon":11.56,"lat":47.76},
       {"place":"Garmisch-Partenkirchen","lon":11.10,"lat":47.50}
       
-      ]' data-params='' data-token="c9720a2815ea61661b0356ab7a71d7e5" data-source="wxcal" data-lang="de"></div>
+      ]' data-params='' data-token="c9720a2815ea61661b0356ab7a71d7e5" data-source="wxcal" data-lang="de"
+      data-callback="testCallbackTest"
+      ></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
