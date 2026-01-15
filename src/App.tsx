@@ -8,6 +8,7 @@ import Status from './components/Status';
 
 
 import type { TLocation } from './types/report';
+import type { THostCallback } from './utils/hostCallback';
 import { getString } from './configs/stringList';
 
 import './App.css'
@@ -24,6 +25,7 @@ type TAppProps = {
     source: string;
     isPublic: boolean;
     lang: string;
+    onReport?: THostCallback | null;
 }
 
 function App({
@@ -33,6 +35,7 @@ function App({
     source,
     isPublic,
     lang,
+    onReport,
 }: TAppProps) {
     const LIMIT_MINUTES = 10;
     const panelOrder: TPanelId[] = useMemo(() => {
@@ -197,6 +200,7 @@ function App({
                                     imageUrl,
                                     isPublic,
                                 }}
+                                onReport={onReport}
                             />
                         )}
                         onNext={nextPanel}
