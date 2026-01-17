@@ -8,7 +8,7 @@ export const sendReport = (
     onSuccess: () => void,
     onError: () => void
 ) => {
-    return fetch(`${baseUrl}/data/add`, {
+    return fetch(`${baseUrl}/reports/add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
