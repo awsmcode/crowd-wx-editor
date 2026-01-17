@@ -47,7 +47,6 @@ const Status = ({
                 imageUrl: imageUrl || '',
                 isPublic,
             };
-            console.log('reportPayload', reportPayload);
             sendReport(token, {
                 ...reportPayload,
             }, () => {
