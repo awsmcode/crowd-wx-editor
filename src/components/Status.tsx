@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { getString } from "../configs/stringList";
 import { sendReport } from '../utils/fetch';
-import { callHostCallback } from '../utils/hostCallback';
+import { callHostCallback, type THostCallback } from '../utils/hostCallback';
 import type { TLocation } from '../types/report';
 import "../styles/status.css";
 
@@ -21,9 +21,11 @@ type TReportStatus = 'success' | 'error' | null;
 const Status = ({
     lang,
     data,
+    onReport,
 }: {
     lang: string,
     data: TSendData,
+    onReport?: THostCallback | null,
 }) => {
     const
         [reportStatus, setReportStatus] = React.useState<TReportStatus>(null);
@@ -45,19 +47,20 @@ const Status = ({
                 imageUrl: imageUrl || '',
                 isPublic,
             };
+            console.log('reportPayload', reportPayload);
             sendReport(token, {
                 ...reportPayload,
             }, () => {
                 // Speichere die Zeit der erfolgreichen Meldung im localStorage
                 localStorage.setItem('lastWeatherReportTime', Date.now().toString());
                 setReportStatus("success");
-                callHostCallback({ status: 'success', report: reportPayload });
+                callHostCallback({ status: 'success', report: reportPayload }, onReport);
             }, () => {
                 setReportStatus("error");
-                callHostCallback({ status: 'error', report: reportPayload });
+                callHostCallback({ status: 'error', report: reportPayload }, onReport);
             });
         }
-    }, [data]);
+    }, [data, onReport]);
 
     return (
         <div className="categories-container">

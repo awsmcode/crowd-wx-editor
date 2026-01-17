@@ -1,9 +1,14 @@
 const root = document.getElementById('cw-root');
 const callbackName = root?.getAttribute('data-callback') || root?.dataset.callback;
 
-type THostCallback = (payload: unknown) => void;
+export type THostCallback = (payload: unknown) => void;
 
-export const callHostCallback = (payload: unknown) => {
+export const callHostCallback = (payload: unknown, callback?: THostCallback | null) => {
+    if (typeof callback === 'function') {
+        callback(payload);
+        return;
+    }
+
     if (!callbackName) {
         return;
     }
