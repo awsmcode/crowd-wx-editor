@@ -96,6 +96,9 @@ export default function WeatherReport() {
       source="network"
       isPublic={false}
       lang="de"
+      onReport={(payload) => {
+        console.log('Lib callback:', payload);
+      }}
     />
   );
 }
@@ -109,7 +112,7 @@ export default function WeatherReport() {
 - `source` (string): Quelle im Report.
 - `isPublic` (boolean): Public-Flag im Report.
 - `lang` (string): Sprachcode.
+- `onReport` (function | null, optional): Callback nach dem Senden (`{ status: "success" | "error", report: ... }`).
 
-> Hinweis: Falls du die Callback-Funktion nutzen willst, musst du ein Element mit der ID
-> `cw-root` und dem `data-callback`-Attribut im DOM haben, da die Callback-Ermittlung
-> aktuell an dieses Element gebunden ist.
+> Hinweis: Die Callback-Ermittlung erfolgt entweder über die Prop `onReport` oder (wie beim
+> Browser-Bundle) über ein Element mit der ID `cw-root` und dem `data-callback`-Attribut.
