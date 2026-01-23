@@ -1,1 +1,1 @@
-export declare const baseUrl = "http://localhost:3003";
+export declare const baseUrl = "https://api.wettersoftware.de/crowd";
