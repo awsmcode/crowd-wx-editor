@@ -5,6 +5,7 @@ import Locations from './components/Locations';
 import Time from './components/Time';
 import ImageUpload from './components/ImageUpload';
 import Status from './components/Status';
+import ReporterDetails from './components/ReporterDetails';
 
 
 import type { TLocation } from './types/report';
@@ -52,6 +53,9 @@ function App({
     const [timestamp, setTimestamp] = useState<number>(Date.now());
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [showRateLimitWarning, setShowRateLimitWarning] = useState(false);
+    const [showReporterDetails, setShowReporterDetails] = useState(false);
+    const [reporterName, setReporterName] = useState('');
+    const [reporterDescription, setReporterDescription] = useState('');
     const uploadTriggerRef = useRef<(() => Promise<string>) | null>(null);
 
     // Prüfe beim Laden der Komponente, ob eine kürzliche Meldung existiert
@@ -171,11 +175,32 @@ function App({
                 return (
                     <PanelContent
                         component={(
-                            <ImageUpload
-                                lang={lang}
-                                token={token}
-                                triggerUploadRef={uploadTriggerRef}
-                            />
+                            <>
+                                <ImageUpload
+                                    lang={lang}
+                                    token={token}
+                                    triggerUploadRef={uploadTriggerRef}
+                                />
+                                <a
+                                    href="#"
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setShowReporterDetails((current) => !current);
+                                    }}
+                                    className="text-link"
+                                >
+                                    {getString(lang, 'REPORTER_DETAILS_LINK')}
+                                </a>
+                                {showReporterDetails && (
+                                    <ReporterDetails
+                                        lang={lang}
+                                        name={reporterName}
+                                        description={reporterDescription}
+                                        onNameChange={setReporterName}
+                                        onDescriptionChange={setReporterDescription}
+                                    />
+                                )}
+                            </>
                         )}
                         onNext={nextPanel}
                         onPrev={prevPanel}
@@ -199,6 +224,8 @@ function App({
                                     source,
                                     imageUrl,
                                     isPublic,
+                                    name: reporterName.trim() || undefined,
+                                    description: reporterDescription.trim() || undefined,
                                 }}
                                 onReport={onReport}
                             />

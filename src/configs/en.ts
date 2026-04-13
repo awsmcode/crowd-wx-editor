@@ -115,6 +115,11 @@ const enStrings: Record<string, string> = {
     TORNADO_F4: 'devastating',
 
     STATUS_TITLE: 'Summary',
+    REPORTER_DETAILS_LINK: 'Would you like to add your name and description?',
+    REPORTER_NAME_LABEL: 'Name (optional)',
+    REPORTER_NAME_PLACEHOLDER: 'Your name',
+    REPORTER_DESCRIPTION_LABEL: 'Description (optional)',
+    REPORTER_DESCRIPTION_PLACEHOLDER: 'Enter a short description',
 };
 
 export default enStrings;

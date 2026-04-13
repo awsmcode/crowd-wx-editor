@@ -115,6 +115,11 @@ const deStrings: Record<string, string> = {
     TORNADO_F4: 'verheerend',
 
     STATUS_TITLE: 'Zusammenfassung',
+    REPORTER_DETAILS_LINK: 'Möchten Sie Ihren Namen und Beschreibung?',
+    REPORTER_NAME_LABEL: 'Name (optional)',
+    REPORTER_NAME_PLACEHOLDER: 'Ihr Name',
+    REPORTER_DESCRIPTION_LABEL: 'Beschreibung (optional)',
+    REPORTER_DESCRIPTION_PLACEHOLDER: 'Kleine Beschreibung eingeben',
 };
 
 export default deStrings;

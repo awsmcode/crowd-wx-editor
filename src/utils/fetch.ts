@@ -25,6 +25,8 @@ export const sendReport = (
             source: report.source,
             imageUrl: report.imageUrl,
             isPublic: report.isPublic,
+            ...(report.name ? { name: report.name } : {}),
+            ...(report.description ? { description: report.description } : {}),
         }),
     })
         .then(async (response) => {

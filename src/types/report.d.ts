@@ -14,6 +14,8 @@ type TReport = {
     source: string;
     imageUrl: string;
     isPublic: boolean;
+    name?: string;
+    description?: string;
 }
 
 export type { TReport, TLocation };

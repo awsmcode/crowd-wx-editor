@@ -115,6 +115,11 @@ const roStrings: Record<string, string> = {
     TORNADO_F4: 'devastatoare',
 
     STATUS_TITLE: 'Rezumat',
+    REPORTER_DETAILS_LINK: 'Doriți să adăugați numele și descrierea?',
+    REPORTER_NAME_LABEL: 'Nume (opțional)',
+    REPORTER_NAME_PLACEHOLDER: 'Numele dvs.',
+    REPORTER_DESCRIPTION_LABEL: 'Descriere (opțional)',
+    REPORTER_DESCRIPTION_PLACEHOLDER: 'Introduceți o scurtă descriere',
 };
 
 export default roStrings;

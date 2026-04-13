@@ -14,6 +14,8 @@ type TSendData = {
     source: string,
     imageUrl: string | null,
     isPublic: boolean,
+    name?: string,
+    description?: string,
 };
 
 type TReportStatus = 'success' | 'error' | null;
@@ -32,7 +34,7 @@ const Status = ({
 
     useEffect(() => {
         const
-            { token, category, auspraegung, location, timestamp, source, imageUrl, isPublic } = data;
+            { token, category, auspraegung, location, timestamp, source, imageUrl, isPublic, name, description } = data;
         if (token && category && auspraegung && location && imageUrl !== null && reportStatus === null) {
             const
                 { lat, lon, place } = location;
@@ -46,6 +48,8 @@ const Status = ({
                 source,
                 imageUrl: imageUrl || '',
                 isPublic,
+                ...(name ? { name } : {}),
+                ...(description ? { description } : {}),
             };
             sendReport(token, {
                 ...reportPayload,
