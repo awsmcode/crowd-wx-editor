@@ -1,8 +1,11 @@
 .reporter-details-container {
-    margin-top: 16px;
+    margin-top: 0;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: stretch;
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 .reporter-details-label {

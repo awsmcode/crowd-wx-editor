@@ -7,13 +7,15 @@ import { getString } from '../configs/stringList';
 interface ImageUploadProps {
     // onImageUploaded?: (imageData: any) => void;
     onUploadError?: (error: string) => void;
+    /** Für Vorschau außerhalb (z. B. Summary): gleiche Datei wie im Dropzone-Preview. */
+    onImageFileChange?: (file: File | null) => void;
     className?: string;
     triggerUploadRef?: React.MutableRefObject<(() => Promise<string>) | null>;
     lang?: string;
     token?: string | null;
 }
 
-const ImageUpload = ({ /* onImageUploaded, */ onUploadError, className, triggerUploadRef, lang = 'de', token }: ImageUploadProps) => {
+const ImageUpload = ({ /* onImageUploaded, */ onUploadError, onImageFileChange, className, triggerUploadRef, lang = 'de', token }: ImageUploadProps) => {
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -36,11 +38,12 @@ const ImageUpload = ({ /* onImageUploaded, */ onUploadError, className, triggerU
         if (acceptedFiles.length > 0) {
             const file = acceptedFiles[0];
             setUploadedFile(file);
+            onImageFileChange?.(file);
             setErrorMessage('');
             setUploadStatus('idle');
             setUploadProgress(0);
         }
-    }, [lang]);
+    }, [lang, onImageFileChange]);
 
     const uploadFile = async (file: File): Promise<string> => {
         setUploadStatus('uploading');
@@ -117,6 +120,7 @@ const ImageUpload = ({ /* onImageUploaded, */ onUploadError, className, triggerU
 
     const removeFile = () => {
         setUploadedFile(null);
+        onImageFileChange?.(null);
         setUploadStatus('idle');
         setUploadProgress(0);
         setErrorMessage('');

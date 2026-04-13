@@ -114,8 +114,15 @@ const enStrings: Record<string, string> = {
     TORNADO_F3: 'severe',
     TORNADO_F4: 'devastating',
 
+    SUMMARY_PAGE_TITLE: 'Review',
+    SUMMARY_FIELD_CATEGORY: 'Category',
+    SUMMARY_FIELD_AUSPRAEGUNG: 'Details',
+    SUMMARY_FIELD_IMAGE: 'Image',
+    SUMMARY_NO_IMAGE: 'No image yet',
+
     STATUS_TITLE: 'Summary',
-    REPORTER_DETAILS_LINK: 'Would you like to add your name and description?',
+    REPORTER_DETAILS_TITLE: 'Additional data',
+    REPORTER_DETAILS_LINK: 'Add your name and description?',
     REPORTER_NAME_LABEL: 'Name (optional)',
     REPORTER_NAME_PLACEHOLDER: 'Your name',
     REPORTER_DESCRIPTION_LABEL: 'Description (optional)',

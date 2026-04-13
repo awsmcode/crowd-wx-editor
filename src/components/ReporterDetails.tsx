@@ -1,4 +1,3 @@
-import React from 'react';
 import { getString } from '../configs/stringList';
 import '../styles/reporterDetails.css';
 
@@ -19,6 +18,7 @@ const ReporterDetails = ({
 }: TReporterDetailsProps) => {
     return (
         <div className="reporter-details-container">
+            <div className="panel-title">{getString(lang, 'REPORTER_DETAILS_TITLE')}</div>
             <label htmlFor="reporter-name" className="reporter-details-label">
                 {getString(lang, 'REPORTER_NAME_LABEL')}
             </label>

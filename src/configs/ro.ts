@@ -114,8 +114,15 @@ const roStrings: Record<string, string> = {
     TORNADO_F3: 'severă',
     TORNADO_F4: 'devastatoare',
 
+    SUMMARY_PAGE_TITLE: 'Verificare',
+    SUMMARY_FIELD_CATEGORY: 'Categorie',
+    SUMMARY_FIELD_AUSPRAEGUNG: 'Intensitate',
+    SUMMARY_FIELD_IMAGE: 'Imagine',
+    SUMMARY_NO_IMAGE: 'Fără imagine',
+
     STATUS_TITLE: 'Rezumat',
-    REPORTER_DETAILS_LINK: 'Doriți să adăugați numele și descrierea?',
+    REPORTER_DETAILS_TITLE: 'Informații suplimentare',
+    REPORTER_DETAILS_LINK: 'Adăugați informații suplimentare?',
     REPORTER_NAME_LABEL: 'Nume (opțional)',
     REPORTER_NAME_PLACEHOLDER: 'Numele dvs.',
     REPORTER_DESCRIPTION_LABEL: 'Descriere (opțional)',
