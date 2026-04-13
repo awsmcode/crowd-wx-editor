@@ -114,7 +114,19 @@ const deStrings: Record<string, string> = {
     TORNADO_F3: 'schwer',
     TORNADO_F4: 'verheerend',
 
+    SUMMARY_PAGE_TITLE: 'Kurzüberblick',
+    SUMMARY_FIELD_CATEGORY: 'Kategorie',
+    SUMMARY_FIELD_AUSPRAEGUNG: 'Ausprägung',
+    SUMMARY_FIELD_IMAGE: 'Bild',
+    SUMMARY_NO_IMAGE: 'Kein Bild',
+
     STATUS_TITLE: 'Zusammenfassung',
+    REPORTER_DETAILS_TITLE: 'Zusatzeingaben',
+    REPORTER_DETAILS_LINK: 'Name und Beschreibung eingeben?',
+    REPORTER_NAME_LABEL: 'Name (optional)',
+    REPORTER_NAME_PLACEHOLDER: 'Ihr Name',
+    REPORTER_DESCRIPTION_LABEL: 'Beschreibung (optional)',
+    REPORTER_DESCRIPTION_PLACEHOLDER: 'Kleine Beschreibung eingeben',
 };
 
 export default deStrings;

@@ -14,6 +14,8 @@ type TSendData = {
     source: string,
     imageUrl: string | null,
     isPublic: boolean,
+    name?: string,
+    description?: string,
 };
 
 type TReportStatus = 'success' | 'error' | null;
@@ -22,17 +24,22 @@ const Status = ({
     lang,
     data,
     onReport,
+    /** Nur true, wenn der Nutzer wirklich auf dem Status-Schritt ist (Slider rendert alle Panels gleichzeitig). */
+    active,
 }: {
     lang: string,
     data: TSendData,
     onReport?: THostCallback | null,
+    active: boolean,
 }) => {
     const
         [reportStatus, setReportStatus] = React.useState<TReportStatus>(null);
 
     useEffect(() => {
+        if (!active) return;
+
         const
-            { token, category, auspraegung, location, timestamp, source, imageUrl, isPublic } = data;
+            { token, category, auspraegung, location, timestamp, source, imageUrl, isPublic, name, description } = data;
         if (token && category && auspraegung && location && imageUrl !== null && reportStatus === null) {
             const
                 { lat, lon, place } = location;
@@ -46,6 +53,8 @@ const Status = ({
                 source,
                 imageUrl: imageUrl || '',
                 isPublic,
+                ...(name ? { name } : {}),
+                ...(description ? { description } : {}),
             };
             sendReport(token, {
                 ...reportPayload,
@@ -59,7 +68,7 @@ const Status = ({
                 callHostCallback({ status: 'error', report: reportPayload }, onReport);
             });
         }
-    }, [data, onReport]);
+    }, [data, onReport, active, reportStatus]);
 
     return (
         <div className="categories-container">

@@ -5,6 +5,8 @@ import Locations from './components/Locations';
 import Time from './components/Time';
 import ImageUpload from './components/ImageUpload';
 import Status from './components/Status';
+import Summary from './components/Summary';
+import ReporterDetails from './components/ReporterDetails';
 
 
 import type { TLocation } from './types/report';
@@ -15,7 +17,7 @@ import './App.css'
 import './styles/categories.css';
 import './styles/messages.css';
 
-const PANEL_ORDER = ['categories', 'auspraegungen', 'locations', 'time', 'upload', 'status'] as const;
+const PANEL_ORDER = ['categories', 'auspraegungen', 'locations', 'time', 'upload', 'summary', 'status'] as const;
 type TPanelId = typeof PANEL_ORDER[number];
 
 type TAppProps = {
@@ -51,7 +53,11 @@ function App({
     const [location, setLocation] = useState<TLocation | null>(null);
     const [timestamp, setTimestamp] = useState<number>(Date.now());
     const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [uploadedImageFile, setUploadedImageFile] = useState<File | null>(null);
     const [showRateLimitWarning, setShowRateLimitWarning] = useState(false);
+    const [showReporterDetails, setShowReporterDetails] = useState(false);
+    const [reporterName, setReporterName] = useState('');
+    const [reporterDescription, setReporterDescription] = useState('');
     const uploadTriggerRef = useRef<(() => Promise<string>) | null>(null);
 
     // Prüfe beim Laden der Komponente, ob eine kürzliche Meldung existiert
@@ -171,11 +177,66 @@ function App({
                 return (
                     <PanelContent
                         component={(
-                            <ImageUpload
+                            <>
+                                <ImageUpload
+                                    lang={lang}
+                                    token={token}
+                                    triggerUploadRef={uploadTriggerRef}
+                                    onImageFileChange={setUploadedImageFile}
+                                />                              
+                            </>
+                        )}
+                        onNext={nextPanel}
+                        onPrev={prevPanel}
+                        showPrev={true}
+                        showNext={true}
+                        lang={lang}
+                    />
+                );
+            case 'summary':
+                return (
+                    <PanelContent
+                        component={(
+                            <>
+                                                      
+                             
+                                {showReporterDetails ? (
+                                    <ReporterDetails
+                                        lang={lang}
+                                        name={reporterName}
+                                        description={reporterDescription}
+                                        onNameChange={setReporterName}
+                                        onDescriptionChange={setReporterDescription}
+                                    />
+                                ) : (
+
+                                    <>
+
+
+<Summary
                                 lang={lang}
-                                token={token}
-                                triggerUploadRef={uploadTriggerRef}
-                            />
+                                category={category}
+                                auspraegung={auspraegung}
+                                imageUrl={imageUrl}
+                                imageFile={uploadedImageFile}
+                            />  
+
+<a
+                                    href="#"
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setShowReporterDetails((current) => !current);
+                                    }}
+                                    className="text-link"
+                                >
+                                    {getString(lang, 'REPORTER_DETAILS_LINK')}
+                                </a>
+                                    </>
+
+                                )}
+                            
+                            </>
+
                         )}
                         onNext={nextPanel}
                         onPrev={prevPanel}
@@ -190,6 +251,7 @@ function App({
                         component={(
                             <Status
                                 lang={lang}
+                                active={panelOrder[panelIndex] === 'status'}
                                 data={{
                                     token,
                                     category,
@@ -199,6 +261,8 @@ function App({
                                     source,
                                     imageUrl,
                                     isPublic,
+                                    name: reporterName.trim() || undefined,
+                                    description: reporterDescription.trim() || undefined,
                                 }}
                                 onReport={onReport}
                             />
@@ -255,14 +319,14 @@ function PanelContent({ component, onNext, onPrev, showPrev, showNext, lang }: T
         <div className="panel-content">
             {component && component}
             <div className="panel-buttons">
-                {showPrev && (
+                {/*showPrev && (
                     <a href="#" onClick={(e) => { e.preventDefault(); onPrev(); }} className="text-link">
                         <svg className="arrow-left" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5H1m0 0l4 4M1 5l4-4"></path>
                         </svg>
                         {getString(lang, 'BACK')}
                     </a>
-                )}
+                )*/}
                 {showNext && (
                     <a href="#" onClick={async (e) => { e.preventDefault(); await onNext(); }} className="text-link">
                         {getString(lang, 'NEXT')}

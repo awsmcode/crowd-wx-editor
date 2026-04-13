@@ -1,0 +1,30 @@
+.reporter-details-container {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: stretch;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.reporter-details-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.reporter-details-input,
+.reporter-details-textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.reporter-details-textarea {
+    resize: vertical;
+    min-height: 96px;
+}
