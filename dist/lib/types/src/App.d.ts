@@ -1,4 +1,3 @@
-import React from 'react';
 import type { TLocation } from './types/report';
 import type { THostCallback } from './utils/hostCallback';
 import './App.css';
@@ -13,6 +12,6 @@ type TAppProps = {
     lang: string;
     onReport?: THostCallback | null;
 };
-declare function App({ token, locations, params, source, isPublic, lang, onReport, }: TAppProps): React.JSX.Element;
+declare function App({ token, locations, params, source, isPublic, lang, onReport, }: TAppProps): JSX.Element;
 export default App;
 export { App as CrowdWxEditor };

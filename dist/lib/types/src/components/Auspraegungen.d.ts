@@ -1,8 +1,7 @@
-import React from 'react';
 type TAuspraegungenProps = {
     category: string | null;
     onSelectAuspraegung: (auspraegung: string) => void;
     lang: string;
 };
-declare const Auspraegungen: ({ category, onSelectAuspraegung, lang }: TAuspraegungenProps) => React.JSX.Element;
+declare const Auspraegungen: ({ category, onSelectAuspraegung, lang }: TAuspraegungenProps) => JSX.Element;
 export default Auspraegungen;

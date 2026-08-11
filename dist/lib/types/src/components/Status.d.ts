@@ -1,4 +1,3 @@
-import React from 'react';
 import { type THostCallback } from '../utils/hostCallback';
 import type { TLocation } from '../types/report';
 import "../styles/status.css";
@@ -11,10 +10,13 @@ type TSendData = {
     source: string;
     imageUrl: string | null;
     isPublic: boolean;
+    name?: string;
+    description?: string;
 };
-declare const Status: ({ lang, data, onReport, }: {
+declare const Status: ({ lang, data, onReport, active, }: {
     lang: string;
     data: TSendData;
     onReport?: THostCallback | null;
-}) => React.JSX.Element;
+    active: boolean;
+}) => JSX.Element;
 export default Status;

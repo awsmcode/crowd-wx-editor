@@ -3,7 +3,7 @@
         "declaration": true,
         "declarationDir": "dist/lib/types",
         "emitDeclarationOnly": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "module": "ESNext",
         "moduleResolution": "bundler",
         "target": "ES2020",
