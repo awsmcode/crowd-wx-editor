@@ -3891,7 +3891,7 @@ function cn(e, a) {
 }
 function mt() {
 }
-const ja = "https://api.wettersoftware.de/crowd", pn = ({
+const ja = "http://localhost:3003", pn = ({
   /* onImageUploaded, */
   onUploadError: e,
   onImageFileChange: a,
